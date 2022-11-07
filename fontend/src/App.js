@@ -6,7 +6,7 @@ import AddReview from "./components/add-review";
 import Restaurant from "./components/restaurants";
 import RestaurantsList from "./components/restaurants-list";
 import Login from "./components/login";
-
+import Dashboard from "./components/dashboard";
 
 // copy and pasted from bootstrap components
 // ex. navbar-dark is different bootstrap classes
@@ -52,6 +52,12 @@ function App() {
           )}
 
         </li>
+
+        <li className="nav-item">
+          <Link to={"/dashboard"} className="nav-link">
+            Dashboard
+          </Link>
+        </li>
       </div>
     </nav>
 
@@ -76,6 +82,13 @@ function App() {
               <Login {...props} login={login} />
             )}
           />
+          <Route 
+            path="/dashboard"
+            render={(props) => (
+              <Dashboard {...props} user={user} />
+            )}
+          />
+
         </Switch>
       </div>
 
