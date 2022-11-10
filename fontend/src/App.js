@@ -82,12 +82,15 @@ function App() {
               <Login {...props} login={login} />
             )}
           />
+          
           <Route 
             path="/dashboard"
             render={(props) => (
               <Dashboard {...props} user={user} />
             )}
+          
           />
+
 
         </Switch>
       </div>

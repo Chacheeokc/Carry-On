@@ -1,4 +1,4 @@
-import e from "express"
+import express from "express"
 import ReviewsDAO from "../dao/reviewsDAO.js"
 
 export default class ReviewsController{
