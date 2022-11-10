@@ -8,7 +8,7 @@ import RestaurantsList from "./components/restaurants-list";
 import Login from "./components/login";
 import Dashboard from "./components/dashboard";
 
-// copy and pasted from bootstrap components
+// using bootstrap components
 // ex. navbar-dark is different bootstrap classes
 //"navbar-brand" indicates that it's the brand part of the nav bar
 // similarly, navbar-nav indicates the navigation part of the nav bar
@@ -32,7 +32,7 @@ function App() {
     <div>
     <nav className="navbar navbar-expand navbar-dark bg-dark">
       <a href="/restaurants" className="navbar-brand">
-        Restaurant Reviews
+          <h1> Carry On </h1>
       </a>
       <div className="navbar-nav mr-auto">
         <li className="nav-item">
