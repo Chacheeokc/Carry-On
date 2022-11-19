@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 
-const Login = props => {
+const Register = props => {
+    const initialUserState = {
+        name: "",
+        id: "",
+      };
+    
+      const [user, setUser] = useState(initialUserState);
+    
+      const handleInputChange = event => {
+        const { name, value } = event.target;
+        setUser({ ...user, [name]: value });
+      };
+    
+      const login = () => {
+        props.login(user)
+        props.history.push('/');
+      }
 
-  const initialUserState = {
-    name: "",
-    id: "",
-  };
-
-  const [user, setUser] = useState(initialUserState);
-
-  const handleInputChange = event => {
-    const { name, value } = event.target;
-    setUser({ ...user, [name]: value });
-  };
-
-  const login = () => {
-    props.login(user)
-    props.history.push('/');
-  }
 
   return (
     <div className="row" class="col d-flex justify-content-center"> 
@@ -55,12 +55,8 @@ const Login = props => {
               <br></br>
 
               <button onClick={login} className="btn btn-success">
-                Login
+                Register
               </button>
-              <br></br>
-              Don't have an account?
-              <br></br>
-              <a href="../register"> Register </a>
             </div>
           </div>
         </div>
@@ -70,4 +66,4 @@ const Login = props => {
   );
 };
 
-export default Login;
+export default Register;

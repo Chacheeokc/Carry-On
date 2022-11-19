@@ -7,6 +7,8 @@ import Restaurant from "./components/restaurants";
 import RestaurantsList from "./components/restaurants-list";
 import Login from "./components/login";
 import Dashboard from "./components/dashboard";
+import Destinations from "./components/destinations";
+import Register from "./components/register";
 
 // using bootstrap components
 // ex. navbar-dark is different bootstrap classes
@@ -58,6 +60,11 @@ function App() {
             Dashboard
           </Link>
         </li>
+        <li className="nav-item">
+          <Link to={"/destinations"} className="nav-link">
+            Destinations
+          </Link>
+        </li>
       </div>
     </nav>
 
@@ -86,6 +93,18 @@ function App() {
             path="/dashboard"
             render={(props) => (
               <Dashboard {...props} user={user} />
+            )}
+          />
+           <Route 
+            path="/destinations"
+            render={(props) => (
+              <Destinations {...props} user={user} />
+            )}
+          />
+          <Route 
+            path="/register"
+            render={(props) => (
+              <Register {...props} user={user} />
             )}
           />
 
