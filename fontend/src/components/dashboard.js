@@ -1,10 +1,11 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import PackingList from "./dashboard components/packing-list";
-import Agenda from "./dashboard components/agenda";
+import PackingList from "./dashboardComponents/packing-list";
+import Agenda from "./dashboardComponents/agenda";
 import FinancialPlanner from "./dashboardComponents/financial-planner";
 
 const Dashboard = props => {
+
   return (
     <div className="row">
 
@@ -12,7 +13,7 @@ const Dashboard = props => {
         <div class="card">
           <div class="card-body">
             <h5 class="card-title"> Agenda</h5>
-            {/* <Agenda/> */}
+            <Agenda></Agenda>
           </div>
         </div>
       </div>
