@@ -1,32 +1,49 @@
-import app from "./server.js";
-import mongodb from 'mongodb';
+// import app from "./server.js";
 import dotenv from 'dotenv';
-import RestaurantDAO from "./dao/restaurantsDAO.js"
-import ReviewsDAO from "./dao/reviewsDAO.js";
-dotenv.config();
-const MongoClient = mongodb.MongoClient;
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import bcrypt from "bcryptjs";
+import('./userDetails.js')
+import UserDetailsSchema from './userDetails.js';
 
 const port = process.env.PORT || 8000;
+dotenv.config();
+const app = express();
+app.use(express.json());
+app.use(cors());
 
-MongoClient.connect(
-    process.env.RESTREVIEWS_DB_URI,
-    {
-        maxPoolSize: 50,
-        wtimeoutMS: 2500,
-        useNewUrlParser: true
-    }
-)
-.catch(err => {
-    console.error(err.stack);
-    process.exit(1);
+mongoose.connect(process.env.RESTREVIEWS_DB_URI, {
+    useNewUrlParser: true,
 })
-.then(async client => {
-    await RestaurantDAO.injectDB(client);
-    await ReviewsDAO.injectDB(client)
-    
-    app.listen(port, () =>{
-        console.log('Listening on ' + port)
+    .then(() => {
+        console.log("Connected to database");
     })
+    .catch((e) => console.log(e));
+
+const User = mongoose.model("UserInfo", UserDetailsSchema);
+app.post("/register", async (req, res) => {
+    const { username, password } = req.body;
+
+    const encryptedPassword = await bcrypt.hash(password, 10);
+
+    try {
+        const oldUser = await User.findOne({ 'username': username })
+        if (oldUser) {
+            return res.json({ error: "User exists" });
+        }
+        await User.create({
+            username: username,
+            password: encryptedPassword,
+        });
+        res.send({ status: 'ok' });
+    } catch (error) {
+        res.send({ status: "error" });
+    }
+});
+
+app.listen(5000, () => {
+    console.log("Listening on " + port);
 })
 
 // run it by using node index
