@@ -6,7 +6,9 @@ import cors from "cors";
 import bcrypt from "bcryptjs";
 import('./userDetails.js')
 import UserDetailsSchema from './userDetails.js';
+import jwt from "jsonwebtoken";
 
+const JWT_SECRET = "jlfkdsFDSIO()fwejiojfsjfdslkfjwoieJKLDFJifopdsf";
 const port = process.env.PORT || 8000;
 dotenv.config();
 const app = express();
@@ -22,6 +24,8 @@ mongoose.connect(process.env.RESTREVIEWS_DB_URI, {
     .catch((e) => console.log(e));
 
 const User = mongoose.model("UserInfo", UserDetailsSchema);
+
+// Create a user
 app.post("/register", async (req, res) => {
     const { username, password } = req.body;
 
@@ -41,6 +45,28 @@ app.post("/register", async (req, res) => {
         res.send({ status: "error" });
     }
 });
+
+app.post("/login-user", async (req, res) => {
+    const { username, password } = req.body;
+
+    // check if email exists
+    const user = await User.findOne({ username });
+    if (!user) {
+        return res.json({ error: "User Not found" });
+    }
+
+    //compare password
+    if (await bcrypt.compare(password, user.password)) {
+        const token = jwt.sign({ username: user.username }, JWT_SECRET);
+
+        if (res.status(201)) {
+            return res.json({ status: "ok", data: token });
+        } else {
+            return res.json({ error: "error" });
+        }
+    }
+    res.json({ status: "error", error: "Invalid Password" });
+})
 
 app.listen(5000, () => {
     console.log("Listening on " + port);
