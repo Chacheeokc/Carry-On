@@ -1,25 +1,6 @@
 import React, { useState, Component } from "react";
 
 export default class Register extends Component {
-  // old stuff
-  // const initialUserState = {
-  //     name: "",
-  //     id: "",
-  //   };
-
-  //   const [user, setUser] = useState(initialUserState);
-
-  //   const handleInputChange = event => {
-  //     const { name, value } = event.target;
-  //     setUser({ ...user, [name]: value });
-  //   };
-
-  //   const login = () => {
-  //     props.login(user)
-  //     props.history.push('/');
-  //   }
-
-  // new stuff
   constructor(props) {
     super(props);
     this.state = {
