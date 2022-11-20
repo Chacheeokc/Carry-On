@@ -68,6 +68,11 @@ app.post("/login-user", async (req, res) => {
     res.json({ status: "error", error: "Invalid Password" });
 })
 
+app.post("/logout-user", async (req, res) => {
+    
+    res.send({status: "ok"});
+})
+
 app.listen(5000, () => {
     console.log("Listening on " + port);
 })
