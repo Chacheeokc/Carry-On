@@ -1,5 +1,5 @@
 import React from "react";
-import {Switch, Route, Link} from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import AddReview from "./components/add-review";
@@ -18,59 +18,79 @@ import Register from "./components/register";
 
 //*** is using useState non-restful? */
 function App() {
-  const [user, setUser] = React.useState(null);
+  // const [user, setUser] = React.useState(null);
 
-  // kind of a dummy login system
-  async function login(user = null){
-    setUser(user);
+  // // kind of a dummy login system
+  // async function login(user = null){
+  //   setUser(user);
+  // }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    fetch("http://localhost:5000/logout-user", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userRegister");
+        if (data.status == "ok") {
+          window.localStorage.removeItem("isLoggedIn");
+          window.localStorage.removeItem("token");
+          window.location.href = "/login";
+        }
+      });
   }
 
-  async function logout(){
-    setUser(null);
-  }
 
 
   return (
     <div>
-    <nav className="navbar navbar-expand navbar-dark bg-dark">
-      <a href="/restaurants" className="navbar-brand">
+      <nav className="navbar navbar-expand navbar-dark bg-dark">
+        <a href="/restaurants" className="navbar-brand">
           <h1> Carry On </h1>
-      </a>
-      <div className="navbar-nav mr-auto">
-        <li className="nav-item">
-          <Link to={"/restaurants"} className="nav-link">
-            Restaurants
-          </Link>
-        </li>
-        <li className="nav-item" >
-          { user ? (
-            <a onClick={logout} className="nav-link" style={{cursor:'pointer'}}>
-              Logout {user.name}
-            </a>
-          ) : (            
-          <Link to={"/login"} className="nav-link">
-            Login
-          </Link>
-          )}
+        </a>
+        <div className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <Link to={"/restaurants"} className="nav-link">
+              Restaurants
+            </Link>
+          </li>
+          <li className="nav-item" >
+            {window.localStorage.getItem('isLoggedIn') ? (
+              <a className="nav-link" onClick={handleSubmit} style={{ cursor: 'pointer' }}>
+                Logout
+                {/* add someway to get username {username} */}
+              </a>
+            ) : (
+              <Link to={"/login"} className="nav-link">
+                Login
+              </Link>
+            )}
 
-        </li>
+          </li>
 
-        <li className="nav-item">
-          <Link to={"/dashboard"} className="nav-link">
-            Dashboard
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link to={"/destinations"} className="nav-link">
-            Destinations
-          </Link>
-        </li>
-      </div>
-    </nav>
+          <li className="nav-item">
+            <Link to={"/dashboard"} className="nav-link">
+              Dashboard
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to={"/destinations"} className="nav-link">
+              Destinations
+            </Link>
+          </li>
+        </div>
+      </nav>
 
-    <div className="container mt-3">
+      <div className="container mt-3">
         <Switch>
-          <Route exact path={["/", "/restaurants"]} component={RestaurantsList} />
+          {/* <Route exact path={["/", "/restaurants"]} component={RestaurantsList} />
           <Route 
             path="/restaurants/:id/review"
             render={(props) => (
@@ -82,36 +102,40 @@ function App() {
             render={(props) => (
               <Restaurant {...props} user={user} />
             )}
-          />
-          <Route 
+          /> */}
+          <Route
             path="/login"
             render={(props) => (
-              <Login {...props} login={login} />
+              // removed login={login} from below
+              <Login {...props} />
             )}
           />
-          <Route 
+          <Route
             path="/dashboard"
             render={(props) => (
-              <Dashboard {...props} user={user} />
+              // removed user={user} from below
+              <Dashboard {...props} />
             )}
           />
-           <Route 
+          <Route
             path="/destinations"
             render={(props) => (
-              <Destinations {...props} user={user} />
+              // removed user={user} from below
+              <Destinations {...props} />
             )}
           />
-          <Route 
+          <Route
             path="/register"
             render={(props) => (
-              <Register {...props} user={user} />
+              // removed user={user} from below
+              <Register {...props} />
             )}
           />
 
         </Switch>
       </div>
 
-  </div>
+    </div>
   );
 }
 
