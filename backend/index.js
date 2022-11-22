@@ -7,6 +7,7 @@ import bcrypt from "bcryptjs";
 import('./userDetails.js')
 import UserDetailsSchema from './userDetails.js';
 import jwt from "jsonwebtoken";
+import { Db } from 'mongodb';
 
 const JWT_SECRET = "jlfkdsFDSIO()fwejiojfsjfdslkfjwoieJKLDFJifopdsf";
 const port = process.env.PORT || 8000;
@@ -28,7 +29,6 @@ const User = mongoose.model("UserInfo", UserDetailsSchema);
 // Create a user
 app.post("/register", async (req, res) => {
     const { username, password } = req.body;
-
     const encryptedPassword = await bcrypt.hash(password, 10);
 
     try {
@@ -39,6 +39,7 @@ app.post("/register", async (req, res) => {
         await User.create({
             username: username,
             password: encryptedPassword,
+            packingItems: [],
         });
         res.send({ status: 'ok' });
     } catch (error) {
@@ -69,8 +70,23 @@ app.post("/login-user", async (req, res) => {
 })
 
 app.post("/logout-user", async (req, res) => {
-    
     res.send({status: "ok"});
+})
+
+app.put("/add-packing-item/", async (req, res) => {
+    const { item, username } = req.body;
+    console.log(username);
+    console.log(item);
+    try{
+        await User.updateOne(
+            {username: username},
+            {$push: {packingItems : item}}
+        )
+        res.send({status: 'ok'});
+    }catch(error){
+        return res.json({error: "user not updated"})
+    }
+
 })
 
 app.listen(5000, () => {

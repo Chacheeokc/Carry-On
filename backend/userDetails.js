@@ -4,6 +4,7 @@ const UserDetailsSchema = new mongoose.Schema(
   {
     username: { type: String, unique: true },
     password: String,
+    packingItems: [String],
   },
   {
     collection: "UserInfo",
