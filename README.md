@@ -22,3 +22,6 @@ Trip agenda
 Packing List
 Map of previous destinations
 Financial Planner
+
+### Install
+npm install axios
