@@ -33,6 +33,8 @@ export default class Login extends Component {
         if (data.status == "ok") {
           window.localStorage.setItem("token", data.data);
           window.localStorage.setItem('isLoggedIn', true);
+          window.localStorage.setItem('username', username);
+          // add a saved user object?
           window.location.href = "./dashboard";
         }
       });
