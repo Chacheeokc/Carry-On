@@ -124,10 +124,6 @@ export default class PackingList extends Component {
           <button className="btn btn-success" onClick={this.handleGet}> Get packing list</button>
           {this.state.packingItems.map((packingItem, idx) => (
             <div key={idx}>
-               {/* <Checkbox checked={task.completed} onClick={() => this.handleUpdate(task._id)}/>
-               <div className={task.completed ? "task line_through" : "task"}>
-                 {packingItem}
-               </div> */}
                <div>{packingItem} </div>
               <button className="btn btn-success" onClick={async (e) => {
                 await this.setState({item: packingItem});
@@ -139,24 +135,6 @@ export default class PackingList extends Component {
             </div>
           ))}
 
-          {/* {items.map((item, index) => (
-              <div className='item-container'>
-                <div className='item-name' onClick={() => toggleComplete(index)}>
-                  {item.isSelected ? (
-                    <>
-                      <FontAwesomeIcon icon={faCheckCircle} />
-                      <span className='completed'> {item.itemName}</span>
-                    </>
-                  ) : (
-                    <>
-                      <FontAwesomeIcon icon={faCircle} />
-                      <span> {item.itemName}</span>
-                    </>
-                  ))}
-
-                </div>
-              </div>
-            ))} */}
         </div>
       </div>
     );

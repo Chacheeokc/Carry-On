@@ -1,10 +1,6 @@
 import React from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-import AddReview from "./components/add-review";
-import Restaurant from "./components/restaurants";
-import RestaurantsList from "./components/restaurants-list";
 import Login from "./components/login";
 import Dashboard from "./components/dashboard";
 import Destinations from "./components/destinations";
@@ -18,12 +14,6 @@ import Register from "./components/register";
 
 //*** is using useState non-restful? */
 function App() {
-  // const [user, setUser] = React.useState(null);
-
-  // // kind of a dummy login system
-  // async function login(user = null){
-  //   setUser(user);
-  // }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -47,8 +37,6 @@ function App() {
       });
   }
 
-
-
   return (
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
@@ -56,16 +44,10 @@ function App() {
           <h1> Carry On </h1>
         </a>
         <div className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link to={"/restaurants"} className="nav-link">
-              Restaurants
-            </Link>
-          </li>
           <li className="nav-item" >
             {window.localStorage.getItem('isLoggedIn') ? (
               <a className="nav-link" onClick={handleSubmit} style={{ cursor: 'pointer' }}>
                 Logout
-                {/* add someway to get username {username} */}
               </a>
             ) : (
               <Link to={"/login"} className="nav-link">
@@ -90,19 +72,6 @@ function App() {
 
       <div className="container mt-3">
         <Switch>
-          {/* <Route exact path={["/", "/restaurants"]} component={RestaurantsList} />
-          <Route 
-            path="/restaurants/:id/review"
-            render={(props) => (
-              <AddReview {...props} user={user} />
-            )}
-          />
-          <Route 
-            path="/restaurants/:id"
-            render={(props) => (
-              <Restaurant {...props} user={user} />
-            )}
-          /> */}
           <Route
             path="/login"
             render={(props) => (

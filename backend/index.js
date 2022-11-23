@@ -7,7 +7,6 @@ import bcrypt from "bcryptjs";
 import('./userDetails.js')
 import UserDetailsSchema from './userDetails.js';
 import jwt from "jsonwebtoken";
-import { Db } from 'mongodb';
 
 const JWT_SECRET = "jlfkdsFDSIO()fwejiojfsjfdslkfjwoieJKLDFJifopdsf";
 const port = process.env.PORT || 8000;
