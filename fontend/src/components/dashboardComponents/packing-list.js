@@ -1,6 +1,7 @@
 import React, { Component, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle, faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 export default class PackingList extends Component {
   // old stuff
@@ -30,12 +31,15 @@ export default class PackingList extends Component {
     super(props);
     this.state = {
       item: "",
+      packingItems: [],
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePut = this.handlePut.bind(this);
+    this.handleGet = this.handleGet.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
 
-  handleSubmit(e) {
+  handlePut(e) {
     e.preventDefault();
     const { item } = this.state;
     const username = window.localStorage.getItem('username');
@@ -58,18 +62,84 @@ export default class PackingList extends Component {
         console.log(data, "userRegister");
       });
   }
+
+  handleGet(e) {
+    e.preventDefault();
+    const username = window.localStorage.getItem('username');
+    fetch("http://localhost:5000/get-packing-items/", {
+      method: "GET",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+        'username': username,
+      },
+    }).then((res) => res.json())
+      .then((data) => {
+        this.setState({ packingItems: [...data] });
+        // console.log(this.state.packingItems);
+      })
+  }
+
+  handleDelete(e){
+    e.preventDefault();
+    const { item } = this.state;
+    const username = window.localStorage.getItem('username');
+    console.log(item);
+    fetch("http://localhost:5000/delete-packing-item", {
+      method: "DELETE",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        item,
+        username
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userRegister");
+      });
+  }
+
+
   render() {
     return (
-      <div className='app-background'>
+      <div className='app-background' >
         <div className='main-container'>
-          <form className="submit-form" onSubmit={this.handleSubmit} >
-            <input onChange={(e) => this.setState({item: e.target.value})} className='add-item-input' placeholder='Add an item...' />
-            {/* used to be onClick={() => handleAddButtonClick()} */}
-            {/* <FontAwesomeIcon icon={faPlus} onSubmit={this.handleClick} /> */}
-            <button className="btn btn-success" > here</button>
+          <form className="submit-form" onSubmit={async (e) => {
+            await this.handlePut(e)
+            await this.handleGet(e)
+            // this.setState({item: ""})
+          }} >
+
+            {/* below had param value={this.state.item} to make resting state blank after hitting submit */}
+            <input onChange={(e) => this.setState({ item: e.target.value })} className='add-item-input' placeholder='Add an item...'  />
+            <button className="btn btn-success" > Add </button>
           </form>
-          <div className='item-list'>
-            {/* {items.map((item, index) => (
+          <button className="btn btn-success" onClick={this.handleGet}> Get packing list</button>
+          {this.state.packingItems.map((packingItem, idx) => (
+            <div key={idx}>
+               {/* <Checkbox checked={task.completed} onClick={() => this.handleUpdate(task._id)}/>
+               <div className={task.completed ? "task line_through" : "task"}>
+                 {packingItem}
+               </div> */}
+               <div>{packingItem} </div>
+              <button className="btn btn-success" onClick={async (e) => {
+                await this.setState({item: packingItem});
+                await this.handleDelete(e);
+                await this.handleGet(e)
+              }}>
+                delete
+              </button>
+            </div>
+          ))}
+
+          {/* {items.map((item, index) => (
               <div className='item-container'>
                 <div className='item-name' onClick={() => toggleComplete(index)}>
                   {item.isSelected ? (
@@ -82,12 +152,11 @@ export default class PackingList extends Component {
                       <FontAwesomeIcon icon={faCircle} />
                       <span> {item.itemName}</span>
                     </>
-                  )}
+                  ))}
 
                 </div>
               </div>
             ))} */}
-          </div>
         </div>
       </div>
     );
