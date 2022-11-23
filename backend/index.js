@@ -47,6 +47,7 @@ app.post("/register", async (req, res) => {
     }
 });
 
+//login user
 app.post("/login-user", async (req, res) => {
     const { username, password } = req.body;
 
@@ -69,14 +70,14 @@ app.post("/login-user", async (req, res) => {
     res.json({ status: "error", error: "Invalid Password" });
 })
 
+//logout user
 app.post("/logout-user", async (req, res) => {
     res.send({status: "ok"});
 })
 
+// add a packing item
 app.put("/add-packing-item/", async (req, res) => {
     const { item, username } = req.body;
-    console.log(username);
-    console.log(item);
     try{
         await User.updateOne(
             {username: username},
@@ -84,9 +85,35 @@ app.put("/add-packing-item/", async (req, res) => {
         )
         res.send({status: 'ok'});
     }catch(error){
-        return res.json({error: "user not updated"})
+        return res.json({error: "user's packing list was not updated"})
     }
+})
 
+// get packing items
+app.get("/get-packing-items", async (req,res) =>{
+    const username = req.headers['username'];
+    try{
+        const user = await User.findOne(
+            {username: username}
+        )
+        return res.json(user.packingItems);
+    }catch(error){
+        return res.json({error: "user not gotten"})
+    }
+})
+
+// delete a packing item
+app.delete("/delete-packing-item", async (req,res) => {
+    const { item, username } = req.body;
+    try{
+        await User.updateOne(
+            {username: username},
+            {$pull: {packingItems : item}}
+        )
+        res.send({status: 'ok'});
+    }catch(error){
+        return res.json({error: "item was not deleted from user's packingList"})
+    }
 })
 
 app.listen(5000, () => {
