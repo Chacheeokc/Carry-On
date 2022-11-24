@@ -78,7 +78,7 @@ export default class PackingList extends Component {
     }).then((res) => res.json())
       .then((data) => {
         this.setState({ packingItems: [...data] });
-        // console.log(this.state.packingItems);
+        console.log(this.state.packingItems);
       })
   }
 
@@ -125,7 +125,7 @@ export default class PackingList extends Component {
           {this.state.packingItems.map((packingItem, idx) => (
             <div key={idx}>
                <div>{packingItem} </div>
-              <button className="btn btn-success" onClick={async (e) => {
+              <button className="remove-item" onClick={async (e) => {
                 await this.setState({item: packingItem});
                 await this.handleDelete(e);
                 await this.handleGet(e)

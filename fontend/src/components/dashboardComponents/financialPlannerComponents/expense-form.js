@@ -5,9 +5,9 @@ function ExpenseForm({ income, setIncome }) {
   const date = useRef(null);
   const price = useRef(null);
 
-  const AddIncome = e => {
+  // add expense item to list
+  const handlePut = e => {
     e.preventDefault();
-
     let d = date.current.value.split("-");
     let newD = new Date(d[0], d[1] - 1, d[2]);
     
@@ -17,20 +17,37 @@ function ExpenseForm({ income, setIncome }) {
       "date": newD.getTime()
     }]);
 
-    desc.current.value = "";
-    price.current.value = null;
-    date.current.value = null;
+    const username = window.localStorage.getItem('username');
+    fetch("http://localhost:5000/add-expense-item", {
+      method: "PUT",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        username,
+        expenseItem : desc.current.value,
+        price : price.current.value,
+        date : date.current.value
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userRegister");
+      });
   }
 
   return (
-    //removed <className="income-form">
-    <form onSubmit={AddIncome}>
-        {/* removed className="form-inner" */}
+
+    <form onSubmit={handlePut}>
       <div>
-        <input type="text" name="desc" id="desc" placeholder="Income Description..." ref={desc} /> 
+        <input type="text" name="desc" id="desc" placeholder="Expense Description..." ref={desc} /> 
         <input type="number" name="price" id="price" placeholder="Price..." ref={price}/>
-        <input type="date" name="date" id="date" placeholder="Income date..." ref={date} />
-        <input type="submit" value="Add Income" />
+        <input type="date" name="date" id="date" placeholder="Date of expense..." ref={date} />
+        <br></br>
+        <input type="submit" value="Add Expense" />
       </div>
     </form>
   )

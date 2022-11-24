@@ -3,9 +3,11 @@
     "axios": "^1.2.0",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.2.2",
+    "date-fns": "^2.29.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.2",
     "react-agenda": "^0.0.8",
+    "react-datepicker": "^4.8.0",
     "react-router-dom": "^5.3.4"
   }
 }

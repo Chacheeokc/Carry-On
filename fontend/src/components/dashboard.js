@@ -8,34 +8,32 @@ const Dashboard = props => {
 
   return (
     <div className="row">
-
-      <div className="col-lg-4 pb-1">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title"> Agenda</h5>
+      <div className="col-sm-6">
+        <div className="card">
+          <div className="card-body">
+            <h3 className="card-title"> Agenda</h3>
             <Agenda></Agenda>
           </div>
         </div>
       </div>
 
-      <div className="col-lg-4 pb-1">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Financial Planner</h5>
+      <div className="col-sm-3 pb-1">
+        <div className="card">
+          <div className="card-body">
+            <h3 className="card-title">Financial Planner</h3>
             <FinancialPlanner></FinancialPlanner>
           </div>
         </div>
       </div>
 
-      <div className="col-lg-4 pb-1">
+      <div className="col-sm-3 pb-1">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title"> Packing List</h5>
+            <h3 class="card-title"> Packing List</h3>
             <PackingList></PackingList>
           </div>
         </div>
       </div>
-
     </div>
 
   );

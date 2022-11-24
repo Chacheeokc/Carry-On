@@ -11,7 +11,7 @@ function ExpenseItem({income, index, removeIncome}) {
   }
 
   return (
-    <div className="income-item">
+    <div className="expense-item">
       <button className="remove-item" onClick={() => removeHandle(index)}>x</button>
       <div className="desc">{income.desc}</div>
       <div className="price">${income.price}</div>
