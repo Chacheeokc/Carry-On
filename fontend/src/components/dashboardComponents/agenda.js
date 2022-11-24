@@ -9,6 +9,7 @@ import { Calendar, dateFnsLocalizer} from "react-big-calendar";
 // import "./App.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
+import { faHandsAmericanSignLanguageInterpreting } from "@fortawesome/free-solid-svg-icons";
 
 const locales = {
   'en-US' : require("date-fns/locale/en-US")
@@ -42,8 +43,50 @@ const events = [
 ]
 
 function Agenda(){
-  const [newEvent, setNewEvent] = useState({title : "", start: "", end: ""})
+  const [newEvent, setNewEvent] = useState({agendaItem : "", start: "", end: ""})
   const [allEvents, setAllEvents] = useState(events)
+
+  const handlePut = e => {
+    const username = window.localStorage.getItem('username');
+     fetch("http://localhost:5000/add-agenda-item", {
+       method: "PUT",
+       crossDomain: true,
+       headers: {
+         "Content-Type": "application/json",
+         Accept: "application/json",
+         "Access-Control-Allow-Origin": "*",
+       },
+       body: JSON.stringify({
+         username,
+         agendaItem : newEvent.agendaItem,
+         startDate : newEvent.start,
+         endDate : newEvent.end,
+       }),
+     })
+       .then((res) => res.json())
+       .then((data) => {
+         console.log(data, "userRegister");
+       });
+   }
+
+   const handleGet = e =>{
+    e.preventDefault();
+    const username = window.localStorage.getItem('username');
+    fetch("http://localhost:5000/get-agenda-items/", {
+      method: "GET",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+        'username': username,
+      },
+    }).then((res) => res.json())
+      .then((data) => {
+        // this.setState({ packingItems: [...data] });
+        // console.log(this.state.packingItems);
+      })
+   }
 
   function handleAddEvent(){
     setAllEvents([...allEvents, newEvent])
@@ -53,11 +96,12 @@ function Agenda(){
     <div>
       <h5> Add New Event </h5>
       <div>
-        <input type = "text" placeholder="Add Title" style={{width:"20%", marginRight: "10px"}} value={newEvent.title} onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}/>
+        <input type = "text" placeholder="Add Title" style={{width:"20%", marginRight: "10px"}} value={newEvent.agendaItem} onChange={(e) => setNewEvent({...newEvent, agendaItem: e.target.value})}/>
         <br></br>
         <DateTimePicker placeholderText="Start Date" style={{marginRight: "10px"}} selected ={newEvent.start} onChange={(start)=> setNewEvent({...newEvent, start : start})}></DateTimePicker>
         <DateTimePicker placeholderText="End Date" selected ={newEvent.end} onChange={(end)=> setNewEvent({...newEvent, end : end})}></DateTimePicker>
-        <button className="btn btn-success" style={{marginTop: "10px"}} onClick={handleAddEvent}> Add event</button>
+        {/* //await setAllEvents([...allEvents, newEvent]), */}
+        <button className="btn btn-success" style={{marginTop: "10px"}} onClick={async(e) => {await handlePut(e)}}> Add event</button>
       </div>
      
       <Calendar 
