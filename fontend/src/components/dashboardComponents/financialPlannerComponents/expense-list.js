@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ExpenseItem from './expense-item';
+import moment from "moment";
 
 function ExpenseList({ income, setIncome }) {
 
@@ -29,11 +30,7 @@ function ExpenseList({ income, setIncome }) {
       },
     }).then((res) => res.json())
       .then((data) => {
-        console.log(data);
-
-        setExpenseItems(expenseItems => [...expenseItems, ...data]);
-        //left off here, trying to get data into expenseItem array and print
-        // setAllEvents([...allEvents, newEvent])
+        setExpenseItems([...expenseItems, ...data]);
         console.log({expenseItems})
       })
   }
@@ -41,13 +38,15 @@ function ExpenseList({ income, setIncome }) {
   return (
     <div className="expense-list">
       <button className="btn btn-success" onClick={handleGet}> Get expenses</button>
-      {/* {expenseItems.map((expenseItem, idx) => (
+      {expenseItems.sort(sortByDate).map((expenseItem, idx) => (
             <div key={idx}>
-               <div>{expenseItem} </div>
+               <div>{expenseItem.expenseItem} {expenseItem.price} {moment(expenseItem.date).format('MM/DD/YY')} </div>
             </div>
-          ))} */}
+          ))}
 
-       { income.sort(sortByDate).map((value, index) => (
+          
+
+       {/* { income.sort(sortByDate).map((value, index) => (
            <ExpenseItem 
              key={index} 
              income={value} 
@@ -55,7 +54,7 @@ function ExpenseList({ income, setIncome }) {
              removeIncome={removeIncome}
            />
          ))
-       }
+       } */}
     </div>
   )
 }

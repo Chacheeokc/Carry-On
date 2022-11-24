@@ -184,6 +184,18 @@ app.put("/add-agenda-item/", async (req, res) => {
 })
 
 // get an agenda item
+    app.get("/get-agenda-items", async (req, res) => {
+        const username = req.headers['username'];
+        // const username = req.body.username;
+        try {
+            const user = await User.findOne(
+                { username: username }
+            )
+            return res.json(user.agendaItems);
+        } catch (error) {
+            return res.json({ error: "user not gotten" })
+        }
+    })
 
 // delete an agenda item
 app.delete("/delete-agenda-item", async (req, res) => {
