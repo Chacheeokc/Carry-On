@@ -37,8 +37,8 @@ export default class Register extends Component {
     return (
       <div className="row" class="col d-flex justify-content-center">
         <div className="col-lg-6 pb-1">
-          <div class="card">
-            <div class="card-body">
+          <div className="card">
+            <div className="card-body">
               <form className="submit-form" onSubmit={this.handleSubmit}>
                 <div>
                   <div className="form-group">

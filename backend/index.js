@@ -115,6 +115,35 @@ app.delete("/delete-packing-item", async (req,res) => {
     }
 })
 
+// add an expense
+app.put("/add-expense-item/", async (req, res) => {
+    const { expenseItem, username, price, date } = req.body;
+    try{
+        await User.updateOne(
+            {username: username},
+            {$push: {expenseItems : {
+                $each: [{expenseItem : expenseItem, price : price, date : date}]
+            } }}
+        )
+        res.send({status: 'ok'});
+    }catch(error){
+        return res.json({error: "user's expense were not updated"})
+    }
+})
+
+// get packing items
+app.get("/get-expense-items", async (req,res) =>{
+    const username = req.headers['username'];
+    try{
+        const user = await User.findOne(
+            {username: username}
+        )
+        return res.json(user.expenseItems);
+    }catch(error){
+        return res.json({error: "user not gotten"})
+    }
+})
+
 app.listen(5000, () => {
     console.log("Listening on " + port);
 })

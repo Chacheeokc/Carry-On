@@ -4,24 +4,24 @@ import ExpenseList from "./financialPlannerComponents/expense-list";
 
 
 const FinancialPlanner = props => {
-    const [income, setIncome] = useState([]);
-	const [totalIncome, setTotalIncome] = useState(0);
+    const [expense, setExpense] = useState([]);
+	const [totalExpense, setTotalExpense] = useState(0);
 
 	useEffect(() => {
 		let temp = 0;
-		for(let i = 0; i < income.length; i++) {
-			temp += parseInt(income[i].price);
+		for(let i = 0; i < expense.length; i++) {
+			temp += parseInt(expense[i].price);
 		}
 
-		setTotalIncome(temp);
-	}, [income]);
+		setTotalExpense(temp);
+	}, [expense]);
 	
 
 	return (
 		<div >
-			<ExpenseForm income={income} setIncome={setIncome} />
-			<ExpenseList income={income} setIncome={setIncome} />
-            <div className="total-income">$ {totalIncome}</div>
+			<ExpenseForm income={expense} setIncome={setExpense} />
+			<ExpenseList income={expense} setIncome={setExpense} />
+            <div className="total-income">$ {totalExpense}</div>
 		</div>
 	);
 }
