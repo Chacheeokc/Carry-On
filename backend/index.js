@@ -39,6 +39,7 @@ app.post("/register", async (req, res) => {
             username: username,
             password: encryptedPassword,
             packingItems: [],
+            // TODO do I need to add expenseItems and their fields etc. here?
         });
         res.send({ status: 'ok' });
     } catch (error) {
@@ -71,76 +72,130 @@ app.post("/login-user", async (req, res) => {
 
 //logout user
 app.post("/logout-user", async (req, res) => {
-    res.send({status: "ok"});
+    res.send({ status: "ok" });
 })
 
 // add a packing item
 app.put("/add-packing-item/", async (req, res) => {
     const { item, username } = req.body;
-    try{
+    try {
         await User.updateOne(
-            {username: username},
-            {$push: {packingItems : item}}
+            { username: username },
+            { $push: { packingItems: item } }
         )
-        res.send({status: 'ok'});
-    }catch(error){
-        return res.json({error: "user's packing list was not updated"})
+        res.send({ status: 'ok' });
+    } catch (error) {
+        return res.json({ error: "user's packing list was not updated" })
     }
 })
 
 // get packing items
-app.get("/get-packing-items", async (req,res) =>{
+app.get("/get-packing-items", async (req, res) => {
     const username = req.headers['username'];
-    try{
+    try {
         const user = await User.findOne(
-            {username: username}
+            { username: username }
         )
         return res.json(user.packingItems);
-    }catch(error){
-        return res.json({error: "user not gotten"})
+    } catch (error) {
+        return res.json({ error: "user not gotten" })
     }
 })
 
 // delete a packing item
-app.delete("/delete-packing-item", async (req,res) => {
+app.delete("/delete-packing-item", async (req, res) => {
     const { item, username } = req.body;
-    try{
+    try {
         await User.updateOne(
-            {username: username},
-            {$pull: {packingItems : item}}
+            { username: username },
+            { $pull: { packingItems: item } }
         )
-        res.send({status: 'ok'});
-    }catch(error){
-        return res.json({error: "item was not deleted from user's packingList"})
+        res.send({ status: 'ok' });
+    } catch (error) {
+        return res.json({ error: "item was not deleted from user's packingList" })
     }
 })
 
 // add an expense
 app.put("/add-expense-item/", async (req, res) => {
     const { expenseItem, username, price, date } = req.body;
-    try{
+    try {
         await User.updateOne(
-            {username: username},
-            {$push: {expenseItems : {
-                $each: [{expenseItem : expenseItem, price : price, date : date}]
-            } }}
+            { username: username },
+            {
+                $push: {
+                    expenseItems: {
+                        $each: [{ expenseItem: expenseItem, price: price, date: date }]
+                    }
+                }
+            }
         )
-        res.send({status: 'ok'});
-    }catch(error){
-        return res.json({error: "user's expense were not updated"})
+        res.send({ status: 'ok' });
+    } catch (error) {
+        return res.json({ error: "user's expense were not updated" })
     }
 })
 
-// get packing items
-app.get("/get-expense-items", async (req,res) =>{
+// get expense items
+app.get("/get-expense-items", async (req, res) => {
     const username = req.headers['username'];
-    try{
+    try {
         const user = await User.findOne(
-            {username: username}
+            { username: username }
         )
         return res.json(user.expenseItems);
-    }catch(error){
-        return res.json({error: "user not gotten"})
+    } catch (error) {
+        return res.json({ error: "user not gotten" })
+    }
+})
+
+// delete an expense item
+app.delete("/delete-expense-item", async (req, res) => {
+    const { expenseItem, username } = req.body;
+    try {
+        await User.updateOne(
+            { username: username},
+            { $pull: {expenseItems: {expenseItem : expenseItem}}})
+
+        res.send({ status: 'ok' });
+    } catch (error) {
+        return res.json({ error: "item was not deleted from user's expenseList" })
+    }
+})
+
+// add an agenda item
+app.put("/add-agenda-item/", async (req, res) => {
+    const { username, agendaItem, startDate, endDate } = req.body;
+    try {
+        await User.updateOne(
+            { username: username },
+            {
+                $push: {
+                    agendaItems: {
+                        $each: [{ agendaItem: agendaItem, startDate: startDate, endDate: endDate }]
+                    }
+                }
+            }
+        )
+        res.send({ status: 'ok' });
+    } catch (error) {
+        return res.json({ error: "user's expense were not updated" })
+    }
+})
+
+// get an agenda item
+
+// delete an agenda item
+app.delete("/delete-agenda-item", async (req, res) => {
+    const { username, agendaItem} = req.body;
+    try {
+        await User.updateOne(
+            { username: username},
+            { $pull: {agendaItems: {agendaItem : agendaItem}}})
+
+        res.send({ status: 'ok' });
+    } catch (error) {
+        return res.json({ error: "item was not deleted from user's agendaList" })
     }
 })
 
@@ -149,4 +204,3 @@ app.listen(5000, () => {
 })
 
 // run it by using node index
-// currently using sample data with mongodb

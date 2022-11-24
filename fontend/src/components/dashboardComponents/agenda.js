@@ -1,27 +1,20 @@
-//new stuff
 import format from "date-fns/format";
 import getDay from "date-fns/getDay";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-// old stuff
-import React, { Component, useState} from "react";
-import { Calendar, momentLocalizer , dateFnsLocalizer} from "react-big-calendar";
-import moment from "moment";
-import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
+import DateTimePicker from "react-datetime-picker"
+import React, {useState} from "react";
+import { Calendar, dateFnsLocalizer} from "react-big-calendar";
 // import "./App.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
-const localizer = momentLocalizer(moment);
-const DnDCalendar = withDragAndDrop(Calendar);
 
-//new stuff
 const locales = {
   'en-US' : require("date-fns/locale/en-US")
 }
 
-const newLocalizer = dateFnsLocalizer({
+const localizer = dateFnsLocalizer({
   format,
   parse,
   startOfWeek,
@@ -61,14 +54,15 @@ function Agenda(){
       <h5> Add New Event </h5>
       <div>
         <input type = "text" placeholder="Add Title" style={{width:"20%", marginRight: "10px"}} value={newEvent.title} onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}/>
-        {/* <DatePicker placeholderText="Start Date" style={{marginRight: "10px"}} selected ={newEvent.start} onChange={(start)=> setNewEvent({...newEvent, start : start})}></DatePicker>
-        <DatePicker placeholderText="End Date" selected ={newEvent.end} onChange={(end)=> setNewEvent({...newEvent, end : end})}></DatePicker> */}
-        <button style={{marginTop: "10px"}} onClick={handleAddEvent}> Add event</button>
+        <br></br>
+        <DateTimePicker placeholderText="Start Date" style={{marginRight: "10px"}} selected ={newEvent.start} onChange={(start)=> setNewEvent({...newEvent, start : start})}></DateTimePicker>
+        <DateTimePicker placeholderText="End Date" selected ={newEvent.end} onChange={(end)=> setNewEvent({...newEvent, end : end})}></DateTimePicker>
+        <button className="btn btn-success" style={{marginTop: "10px"}} onClick={handleAddEvent}> Add event</button>
       </div>
      
       <Calendar 
       defaultView="agenda" 
-      localizer= {newLocalizer} 
+      localizer= {localizer} 
       events={allEvents} 
       startAccessor="start" 
       endAccessor="end" 
@@ -77,53 +71,5 @@ function Agenda(){
     </div>
   )
 }
-
-
-
-//old stuff
-// class Agenda extends Component{
-//   state = {
-//     events: [
-//       {
-//         start: moment().toDate(),
-//         end: moment()
-//           .add(1, "days")
-//           .toDate(),
-//         title: "Some title"
-//       }
-//     ]
-//   };
-
-//   onEventResize = (data) => {
-//     const { start, end } = data;
-
-//     this.setState((state) => {
-//       state.events[0].start = start;
-//       state.events[0].end = end;
-//       return { events: [...state.events] };
-//     });
-//   };
-
-//   onEventDrop = (data) => {
-//     console.log(data);
-//   };
-
-//   render(){
-//   return (
-//     <div className="App">
-//       <DnDCalendar
-//         localizer={localizer}
-//         defaultDate={new Date()}
-//         defaultView="agenda"
-//         events={this.state.events}
-//         style={{ height: "100vh" }}
-//         onEventDrop={this.onEventDrop}
-//         onEventResize={this.onEventResize}
-//         resizable
-//       />
-//     </div>
-//   )
-//   }
-//   };
 
   export default Agenda;
