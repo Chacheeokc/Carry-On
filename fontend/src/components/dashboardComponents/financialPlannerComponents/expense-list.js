@@ -32,6 +32,8 @@ function ExpenseList({ income, setIncome }) {
         console.log(data);
 
         setExpenseItems(expenseItems => [...expenseItems, ...data]);
+        //left off here, trying to get data into expenseItem array and print
+        // setAllEvents([...allEvents, newEvent])
         console.log({expenseItems})
       })
   }

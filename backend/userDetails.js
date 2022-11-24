@@ -10,7 +10,12 @@ const UserDetailsSchema = new mongoose.Schema(
       price : Number, 
       date : Date,
     }],
-    expenseTotal: Number
+    expenseTotal: Number,
+    agendaItems: [{
+      agendaItem : String,
+      startDate : Date,
+      endDate: Date,
+    }]
     
   },
   {
