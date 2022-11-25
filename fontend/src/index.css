@@ -150,6 +150,23 @@ h1 {
 	padding-left: 75px;
 }
 
+.packing-list .remove-item{
+	position: absolute;
+	width: 0;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	overflow: hidden;
+
+	cursor: pointer;
+	display: block;
+	color: var(--light);
+	font-weight: 600;
+	background-color: var(--alert);
+	border-radius: 8px 0px 0px 8px;
+	transition: 0.2s;
+}
+
 .expense-list .expense-item .remove-item {
 	position: absolute;
 	width: 0;

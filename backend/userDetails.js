@@ -12,9 +12,9 @@ const UserDetailsSchema = new mongoose.Schema(
     }],
     expenseTotal: Number,
     agendaItems: [{
-      agendaItem : String,
-      startDate : Date,
-      endDate: Date,
+      title : String,
+      start : Date,
+      end: Date,
     }]
     
   },

@@ -1,4 +1,4 @@
-import React, { useState, Component } from "react";
+import React, { Component } from "react";
 
 export default class Login extends Component {
   constructor(props) {
@@ -55,8 +55,6 @@ export default class Login extends Component {
                         onChange={(e) => this.setState({ username: e.target.value })}
                         id="name"
                         required
-                        // value={user.name}
-                        // onChange={handleInputChange}
                         name="name"
                       />
                     </div>
@@ -64,20 +62,16 @@ export default class Login extends Component {
                     <div className="form-group">
                       <label htmlFor="id">Password</label>
                       <input
-                        type="text"
+                        type="password"
                         className="form-control"
                         onChange={(e) => this.setState({ password: e.target.value })}
                         id="id"
                         required
-                        // value={user.id}
-                        // onChange={handleInputChange}
                         name="id"
                       />
                     </div>
 
                     <br></br>
-
-                    {/* <button onClick={login} className="btn btn-success"> */}
                     <button className="btn btn-success">
                       Login
                     </button>

@@ -165,21 +165,21 @@ app.delete("/delete-expense-item", async (req, res) => {
 
 // add an agenda item
 app.put("/add-agenda-item/", async (req, res) => {
-    const { username, agendaItem, startDate, endDate } = req.body;
+    const { username, title, start, end } = req.body;
     try {
         await User.updateOne(
             { username: username },
             {
                 $push: {
                     agendaItems: {
-                        $each: [{ agendaItem: agendaItem, startDate: startDate, endDate: endDate }]
+                        $each: [{ title: title, start: start, end: end }]
                     }
                 }
             }
         )
         res.send({ status: 'ok' });
     } catch (error) {
-        return res.json({ error: "user's expense were not updated" })
+        return res.json({ error: "user's agenda was not updated" })
     }
 })
 
@@ -199,15 +199,15 @@ app.put("/add-agenda-item/", async (req, res) => {
 
 // delete an agenda item
 app.delete("/delete-agenda-item", async (req, res) => {
-    const { username, agendaItem} = req.body;
+    const { username, title} = req.body;
     try {
         await User.updateOne(
             { username: username},
-            { $pull: {agendaItems: {agendaItem : agendaItem}}})
+            { $pull: {agendaItems: {title : title}}})
 
         res.send({ status: 'ok' });
     } catch (error) {
-        return res.json({ error: "item was not deleted from user's agendaList" })
+        return res.json({ error: "item was not deleted from user's agenda" })
     }
 })
 
