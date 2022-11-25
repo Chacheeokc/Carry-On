@@ -9,7 +9,6 @@ import { Calendar, dateFnsLocalizer} from "react-big-calendar";
 // import "./App.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
-import { faHandsAmericanSignLanguageInterpreting } from "@fortawesome/free-solid-svg-icons";
 
 const locales = {
   'en-US' : require("date-fns/locale/en-US")
@@ -43,7 +42,8 @@ const events = [
 ]
 
 function Agenda(){
-  const [newEvent, setNewEvent] = useState({agendaItem : "", start: "", end: ""})
+  const [newEvent, setNewEvent] = useState({title : "", start: "", end: ""})
+  const [deleteEvent, setDeleteEvent] = useState("nothinghappend")
   const [allEvents, setAllEvents] = useState(events)
 
   const handlePut = e => {
@@ -59,9 +59,9 @@ function Agenda(){
        // might need to rename everything to match start, title, end?
        body: JSON.stringify({
          username,
-         agendaItem : newEvent.agendaItem,
-         startDate : newEvent.start,
-         endDate : newEvent.end,
+         title : newEvent.title,
+         start : newEvent.start,
+         end : newEvent.end,
        }),
      })
        .then((res) => res.json())
@@ -92,21 +92,50 @@ function Agenda(){
       })
    }
 
-  function handleAddEvent(){
-    setAllEvents([...allEvents, newEvent])
+  const handleEventSelection = async (e) => {
+    console.log(e.title);
+    // setDeleteEvent([...deleteEvent, e.title]);
+    //TODO stuck here, can't get setDeleteEvent to set to anything but the start val
+    await setDeleteEvent("blue");
+    console.log(deleteEvent);
+    // handleDelete(e);
+  };
+
+ const handleDelete = e => {
+    // e.preventDefault();
+    console.log(deleteEvent);
+    const username = window.localStorage.getItem('username');
+    fetch("http://localhost:5000/delete-agenda-item", {
+      method: "DELETE",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        // item,
+        username
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userRegister");
+        handleGet(e);
+      });
   }
 
   return(
     <div>
       <h5> Add New Event </h5>
       <div>
-        <input type = "text" placeholder="Add Title" style={{width:"20%", marginRight: "10px"}} value={newEvent.agendaItem} onChange={(e) => setNewEvent({...newEvent, agendaItem: e.target.value})}/>
+        <input type = "text" placeholder="Add Title" style={{width:"20%", marginRight: "10px"}} value={newEvent.title} onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}/>
         <br></br>
         <DateTimePicker placeholderText="Start Date" style={{marginRight: "10px"}} selected ={newEvent.start} onChange={(start)=> setNewEvent({...newEvent, start : start})}></DateTimePicker>
         <DateTimePicker placeholderText="End Date" selected ={newEvent.end} onChange={(end)=> setNewEvent({...newEvent, end : end})}></DateTimePicker>
-        {/* //await setAllEvents([...allEvents, newEvent]), */}
         <button className="btn btn-success" style={{marginTop: "10px"}} onClick={async(e) => {await handlePut(e)}}> Add event</button>
-        <button onClick={handleGet}> get your events </button>
+        <br></br>
+        <button className="btn btn-success" onClick={async(e) => {await handleGet(e)}}> get your events </button>
       </div>
      
       <Calendar 
@@ -116,6 +145,8 @@ function Agenda(){
       startAccessor="start" 
       endAccessor="end" 
       style ={{height: 500, margin : "50px"}}
+      onSelectEvent={handleEventSelection}
+      views={["month", "agenda"]}
       ></Calendar>
     </div>
   )

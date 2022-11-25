@@ -84,7 +84,7 @@ export default class PackingList extends Component {
       })
   }
 
-  handleDelete(e){
+  handleDelete(e) {
     e.preventDefault();
     const { item } = this.state;
     const username = window.localStorage.getItem('username');
@@ -115,22 +115,23 @@ export default class PackingList extends Component {
       <div className='app-background' >
         <div className='main-container'>
           <form className="submit-form" onSubmit={async (e) => {
-             await this.handlePut(e)
-            this.setState({item: ""})
+            await this.handlePut(e)
+            this.setState({ item: "" })
           }} >
-            <input onChange={(e) => this.setState({ item: e.target.value })} className='add-item-input' placeholder='Add an item...'  value={this.state.item}/>
+            <input onChange={(e) => this.setState({ item: e.target.value })} className='add-item-input' placeholder='Add an item...' value={this.state.item} />
             <button className="btn btn-success" > Add </button>
           </form>
           <button className="btn btn-success" onClick={this.handleGet}> Get packing list</button>
           {this.state.packingItems.map((packingItem, idx) => (
             <div key={idx}>
-               <div>{packingItem} </div>
+              <div>{packingItem} </div>
               <button className="remove-item" onClick={async (e) => {
-                await this.setState({item: packingItem});
+                await this.setState({ item: packingItem });
                 await this.handleDelete(e);
               }}>
                 delete
               </button>
+
             </div>
           ))}
 

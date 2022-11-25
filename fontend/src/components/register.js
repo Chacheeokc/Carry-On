@@ -1,4 +1,4 @@
-import React, { useState, Component } from "react";
+import React, {Component } from "react";
 
 export default class Register extends Component {
   constructor(props) {
@@ -29,6 +29,7 @@ export default class Register extends Component {
       .then((res) => res.json())
       .then((data) => {
         console.log(data, "userRegister");
+        window.location.href = "./login";
       });
       console.log(username);
   }
@@ -48,7 +49,6 @@ export default class Register extends Component {
                       className="form-control"
                       id="name"
                       required
-                      // value={user.name}
                       onChange={(e) => this.setState({ username: e.target.value })}
                       name="name"
                     />
@@ -57,19 +57,16 @@ export default class Register extends Component {
                   <div className="form-group">
                     <label htmlFor="id">Password</label>
                     <input
-                      type="text"
+                      type="password"
                       className="form-control"
                       id="id"
                       required
-                      // value={user.id}
                       onChange={(e) => this.setState({ password: e.target.value })}
                       name="id"
                     />
                   </div>
 
                   <br></br>
-{/* 
-                  <button onClick={login} className="btn btn-success"> */}
                   <button className="btn btn-success">
                     Register
                   </button>

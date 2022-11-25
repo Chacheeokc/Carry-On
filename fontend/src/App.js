@@ -5,6 +5,7 @@ import Login from "./components/login";
 import Dashboard from "./components/dashboard";
 import Destinations from "./components/destinations";
 import Register from "./components/register";
+import Home from "./components/home";
 
 // using bootstrap components
 // ex. navbar-dark is different bootstrap classes
@@ -40,7 +41,7 @@ function App() {
   return (
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <a href="/restaurants" className="navbar-brand">
+        <a href="/home" className="navbar-brand">
           <h1> Carry On </h1>
         </a>
         <div className="navbar-nav mr-auto">
@@ -72,10 +73,15 @@ function App() {
 
       <div className="container mt-3">
         <Switch>
+        <Route
+            path="/home"
+            render={(props) => (
+              <Home {...props} />
+            )}
+          />
           <Route
             path="/login"
             render={(props) => (
-              // removed login={login} from below
               <Login {...props} />
             )}
           />
