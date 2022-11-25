@@ -24,22 +24,22 @@ const localizer = dateFnsLocalizer({
 });
 
 const events = [
-  {
-    title: "Big Meeting",
-    allDay: true,
-    start: new Date(2022, 10, 10, 10, 30, 0, 0),
-    end: new Date(2022, 10, 10, 12, 30, 0, 0),
-},
-{
-    title: "Vacation",
-    start: new Date(2022, 10, 10, 10, 30, 0, 0),
-    end: new Date(2022, 10, 10, 10, 30, 0, 0),
-},
-{
-    title: "Conference",
-    start: new Date(2022, 10, 10, 10, 30, 0, 0),
-    end: new Date(2022, 10, 10, 10, 30, 0, 0),
-},
+//   {
+//     title: "Big Meeting",
+//     allDay: true,
+//     start: new Date(2022, 10, 10, 10, 30, 0, 0),
+//     end: new Date(2022, 10, 10, 12, 30, 0, 0),
+// },
+// {
+//     title: "Vacation",
+//     start: new Date(2022, 10, 10, 10, 30, 0, 0),
+//     end: new Date(2022, 10, 10, 10, 30, 0, 0),
+// },
+// {
+//     title: "Conference",
+//     start: new Date(2022, 10, 10, 10, 30, 0, 0),
+//     end: new Date(2022, 10, 10, 10, 30, 0, 0),
+// },
 ]
 
 function Agenda(){
@@ -56,6 +56,7 @@ function Agenda(){
          Accept: "application/json",
          "Access-Control-Allow-Origin": "*",
        },
+       // might need to rename everything to match start, title, end?
        body: JSON.stringify({
          username,
          agendaItem : newEvent.agendaItem,
@@ -85,6 +86,9 @@ function Agenda(){
       .then((data) => {
         // this.setState({ packingItems: [...data] });
         // console.log(this.state.packingItems);
+        console.log(allEvents);
+        setAllEvents([...allEvents, ...data]);
+        console.log(allEvents);
       })
    }
 
@@ -102,6 +106,7 @@ function Agenda(){
         <DateTimePicker placeholderText="End Date" selected ={newEvent.end} onChange={(end)=> setNewEvent({...newEvent, end : end})}></DateTimePicker>
         {/* //await setAllEvents([...allEvents, newEvent]), */}
         <button className="btn btn-success" style={{marginTop: "10px"}} onClick={async(e) => {await handlePut(e)}}> Add event</button>
+        <button onClick={handleGet}> get your events </button>
       </div>
      
       <Calendar 

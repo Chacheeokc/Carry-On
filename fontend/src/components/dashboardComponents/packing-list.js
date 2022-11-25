@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle, faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
+
 export default class PackingList extends Component {
   // old stuff
   // const [items, setItems] = useState([
@@ -60,6 +61,7 @@ export default class PackingList extends Component {
       .then((res) => res.json())
       .then((data) => {
         console.log(data, "userRegister");
+        this.handleGet(e);
       });
   }
 
@@ -103,6 +105,7 @@ export default class PackingList extends Component {
       .then((res) => res.json())
       .then((data) => {
         console.log(data, "userRegister");
+        this.handleGet(e);
       });
   }
 
@@ -112,13 +115,10 @@ export default class PackingList extends Component {
       <div className='app-background' >
         <div className='main-container'>
           <form className="submit-form" onSubmit={async (e) => {
-            await this.handlePut(e)
-            await this.handleGet(e)
-            // this.setState({item: ""})
+             await this.handlePut(e)
+            this.setState({item: ""})
           }} >
-
-            {/* below had param value={this.state.item} to make resting state blank after hitting submit */}
-            <input onChange={(e) => this.setState({ item: e.target.value })} className='add-item-input' placeholder='Add an item...'  />
+            <input onChange={(e) => this.setState({ item: e.target.value })} className='add-item-input' placeholder='Add an item...'  value={this.state.item}/>
             <button className="btn btn-success" > Add </button>
           </form>
           <button className="btn btn-success" onClick={this.handleGet}> Get packing list</button>
@@ -128,7 +128,6 @@ export default class PackingList extends Component {
               <button className="remove-item" onClick={async (e) => {
                 await this.setState({item: packingItem});
                 await this.handleDelete(e);
-                await this.handleGet(e)
               }}>
                 delete
               </button>

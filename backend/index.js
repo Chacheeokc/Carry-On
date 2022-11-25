@@ -9,7 +9,7 @@ import UserDetailsSchema from './userDetails.js';
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = "jlfkdsFDSIO()fwejiojfsjfdslkfjwoieJKLDFJifopdsf";
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 dotenv.config();
 const app = express();
 app.use(express.json());
