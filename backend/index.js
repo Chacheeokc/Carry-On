@@ -151,11 +151,12 @@ app.get("/get-expense-items", async (req, res) => {
 
 // delete an expense item
 app.delete("/delete-expense-item", async (req, res) => {
-    const { expenseItem, username } = req.body;
+    const { item, username } = req.body;
     try {
+        console.log(item);
         await User.updateOne(
             { username: username},
-            { $pull: {expenseItems: {expenseItem : expenseItem}}})
+            { $pull: {expenseItems: {expenseItem : item}}})
 
         res.send({ status: 'ok' });
     } catch (error) {

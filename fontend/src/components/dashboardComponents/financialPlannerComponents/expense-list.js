@@ -1,20 +1,51 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import ExpenseItem from './expense-item';
 import moment from "moment";
 import { set } from 'date-fns';
 
 function ExpenseList({ income, setIncome }) {
   const [expenseItems, setExpenseItems] = useState([]);
-  // const [item, setItem] = ({expenseItem : "", price: 0, date: ""})
-
-
-  const removeIncome = i => {
-    let temp = income.filter((v, index) => index != i);
-    setIncome(temp);
-  }
+  var deleteItem = "";
+  const desc = useRef(null);
+  const date = useRef(null);
+  const price = useRef(null);
 
   const sortByDate = (a, b) => {
     return a.date - b.date;
+  }
+
+  const handlePut = e => {
+    e.preventDefault();
+    let d = date.current.value.split("-");
+    let newD = new Date(d[0], d[1] - 1, d[2]);
+    
+    setIncome([...income, {
+      "desc": desc.current.value,
+      "price": price.current.value,
+      "date": newD.getTime()
+    }]);
+
+    const username = window.localStorage.getItem('username');
+    fetch("http://localhost:5000/add-expense-item", {
+      method: "PUT",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        username,
+        expenseItem : desc.current.value,
+        price : price.current.value,
+        date : date.current.value
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userRegister");
+        handleGet(e);
+      });
   }
 
   const handleGet = e => {
@@ -32,16 +63,16 @@ function ExpenseList({ income, setIncome }) {
       },
     }).then((res) => res.json())
       .then((data) => {
-        setExpenseItems([...expenseItems, ...data]);
+        setExpenseItems([...data]);
         console.log({expenseItems})
       })
   }
 
-  const handleDelete = e => {
+  const handleDelete = async e => {
     e.preventDefault();
-    const { item } = item.expenseItem;
+    const expense = deleteItem;
+    console.log(expense);
     const username = window.localStorage.getItem('username');
-    console.log(item);
     fetch("http://localhost:5000/delete-expense-item", {
       method: "DELETE",
       crossDomain: true,
@@ -51,18 +82,29 @@ function ExpenseList({ income, setIncome }) {
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
-        item,
+        item : expense,
         username
       }),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data, "userRegister");
-        // handleGet(e);
+        handleGet(e);
       });
   }
 
   return (
+    <div>
+    <form onSubmit={handlePut}>
+      <div>
+        <input type="text" name="desc" id="desc" placeholder="Expense Description..." ref={desc} /> 
+        <input type="number" name="price" id="price" placeholder="Price..." ref={price}/>
+        <input type="text" name="date" id="date" placeholder="Date of expense... (mm/dd/yy)" ref={date} />
+        <br></br>
+        <input type="submit" value="Add Expense" />
+      </div>
+    </form>
+
     <div className="expense-list">
       <button className="btn btn-success" onClick={async (e) =>{
         await handleGet(e)
@@ -71,7 +113,7 @@ function ExpenseList({ income, setIncome }) {
             <div key={idx}>
                <div>{expenseItem.expenseItem} {expenseItem.price} {moment(expenseItem.date).format('MM/DD/YY')} </div>
                <button className="remove-item" onClick={async (e) => {
-                // await setItem({...item, expenseItem : expenseItem.expenseItem})
+                deleteItem = expenseItem.expenseItem;
                 await handleDelete(e);
               }}>
                 delete
@@ -87,6 +129,7 @@ function ExpenseList({ income, setIncome }) {
            />
          ))
        } */}
+    </div>
     </div>
   )
 }

@@ -22,24 +22,7 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-const events = [
-//   {
-//     title: "Big Meeting",
-//     allDay: true,
-//     start: new Date(2022, 10, 10, 10, 30, 0, 0),
-//     end: new Date(2022, 10, 10, 12, 30, 0, 0),
-// },
-// {
-//     title: "Vacation",
-//     start: new Date(2022, 10, 10, 10, 30, 0, 0),
-//     end: new Date(2022, 10, 10, 10, 30, 0, 0),
-// },
-// {
-//     title: "Conference",
-//     start: new Date(2022, 10, 10, 10, 30, 0, 0),
-//     end: new Date(2022, 10, 10, 10, 30, 0, 0),
-// },
-]
+const events = []
 
 function Agenda(){
   const [newEvent, setNewEvent] = useState({title : "", start: "", end: ""})
@@ -71,7 +54,9 @@ function Agenda(){
    }
 
    const handleGet = e =>{
-    e.preventDefault();
+    if(!(e?.isDelete)){
+      e.preventDefault();
+    }
     const username = window.localStorage.getItem('username');
     fetch("http://localhost:5000/get-agenda-items/", {
       method: "GET",
@@ -87,23 +72,24 @@ function Agenda(){
         // this.setState({ packingItems: [...data] });
         // console.log(this.state.packingItems);
         console.log(allEvents);
-        setAllEvents([...allEvents, ...data]);
+        setAllEvents([...data]);
         console.log(allEvents);
       })
    }
 
-  const handleEventSelection = async (e) => {
-    console.log(e.title);
-    // setDeleteEvent([...deleteEvent, e.title]);
-    //TODO stuck here, can't get setDeleteEvent to set to anything but the start val
-    await setDeleteEvent("blue");
-    console.log(deleteEvent);
-    // handleDelete(e);
-  };
+  // const handleEventSelection = async (e) => {
+  //   console.log(e.title);
+  //   // setDeleteEvent([...deleteEvent, e.title]);
+  //   //TODO stuck here, can't get setDeleteEvent to set to anything but the start val
+  //   await setDeleteEvent(e.title);
+  //   console.log(deleteEvent);
+  //   handleDelete(e);
+  // };
 
- const handleDelete = e => {
-    // e.preventDefault();
-    console.log(deleteEvent);
+ const handleDelete = async e => {
+    e.isDelete = true;
+    const title = e.title; 
+    console.log(title);
     const username = window.localStorage.getItem('username');
     fetch("http://localhost:5000/delete-agenda-item", {
       method: "DELETE",
@@ -114,7 +100,7 @@ function Agenda(){
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
-        // item,
+        title,
         username
       }),
     })
@@ -129,6 +115,7 @@ function Agenda(){
     <div>
       <h5> Add New Event </h5>
       <div>
+        
         <input type = "text" placeholder="Add Title" style={{width:"20%", marginRight: "10px"}} value={newEvent.title} onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}/>
         <br></br>
         <DateTimePicker placeholderText="Start Date" style={{marginRight: "10px"}} selected ={newEvent.start} onChange={(start)=> setNewEvent({...newEvent, start : start})}></DateTimePicker>
@@ -145,7 +132,7 @@ function Agenda(){
       startAccessor="start" 
       endAccessor="end" 
       style ={{height: 500, margin : "50px"}}
-      onSelectEvent={handleEventSelection}
+      onSelectEvent={handleDelete}
       views={["month", "agenda"]}
       ></Calendar>
     </div>
