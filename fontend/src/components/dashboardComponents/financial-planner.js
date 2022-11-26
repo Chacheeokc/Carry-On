@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ExpenseForm from "./financialPlannerComponents/expense-form";
+// import ExpenseForm from "./financialPlannerComponents/expense-form";
 import ExpenseList from "./financialPlannerComponents/expense-list";
 
 
@@ -19,7 +19,7 @@ const FinancialPlanner = props => {
 
 	return (
 		<div >
-			<ExpenseForm income={expense} setIncome={setExpense} />
+			{/* <ExpenseForm income={expense} setIncome={setExpense} /> */}
 			<ExpenseList income={expense} setIncome={setExpense} />
             <div className="total-income">$ {totalExpense}</div>
 		</div>
