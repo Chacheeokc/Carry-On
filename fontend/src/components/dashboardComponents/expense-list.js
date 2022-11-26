@@ -6,6 +6,7 @@ import { set } from 'date-fns';
 function ExpenseList({ income, setIncome }) {
   const [expenseItems, setExpenseItems] = useState([]);
   var deleteItem = "";
+  var deleteItemPrice = 0;
   const desc = useRef(null);
   const date = useRef(null);
   const price = useRef(null);
@@ -71,6 +72,7 @@ function ExpenseList({ income, setIncome }) {
   const handleDelete = async e => {
     e.preventDefault();
     const expense = deleteItem;
+    const expensePrice = deleteItemPrice;
     console.log(expense);
     const username = window.localStorage.getItem('username');
     fetch("http://localhost:5000/delete-expense-item", {
@@ -83,7 +85,8 @@ function ExpenseList({ income, setIncome }) {
       },
       body: JSON.stringify({
         item : expense,
-        username
+        username,
+        price : expensePrice
       }),
     })
       .then((res) => res.json())
@@ -114,6 +117,7 @@ function ExpenseList({ income, setIncome }) {
                <div>{expenseItem.expenseItem} {expenseItem.price} {moment(expenseItem.date).format('MM/DD/YY')} </div>
                <button className="remove-item" onClick={async (e) => {
                 deleteItem = expenseItem.expenseItem;
+                deleteItemPrice = expenseItem.price;
                 await handleDelete(e);
               }}>
                 delete
