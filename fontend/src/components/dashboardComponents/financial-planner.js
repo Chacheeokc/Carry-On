@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import ExpenseForm from "./financialPlannerComponents/expense-form";
-import ExpenseList from "./financialPlannerComponents/expense-list";
+import ExpenseList from "./expense-list";
 
 
 const FinancialPlanner = props => {
