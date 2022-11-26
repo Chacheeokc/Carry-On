@@ -39,6 +39,9 @@ app.post("/register", async (req, res) => {
             username: username,
             password: encryptedPassword,
             packingItems: [],
+            expenseItems: [],
+            expenseTotal: 0,
+            agendaItems: [],
             // TODO do I need to add expenseItems and their fields etc. here?
         });
         res.send({ status: 'ok' });
@@ -127,7 +130,8 @@ app.put("/add-expense-item/", async (req, res) => {
                     expenseItems: {
                         $each: [{ expenseItem: expenseItem, price: price, date: date }]
                     }
-                }
+                },
+                $push: { expenseTotal : price,}
             }
         )
         res.send({ status: 'ok' });

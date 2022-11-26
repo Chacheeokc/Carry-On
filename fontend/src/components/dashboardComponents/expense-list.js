@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import ExpenseItem from './expense-item';
+// import ExpenseItem from './expense-item';
 import moment from "moment";
 import { set } from 'date-fns';
 
