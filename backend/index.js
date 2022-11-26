@@ -122,7 +122,10 @@ app.delete("/delete-packing-item", async (req, res) => {
 // add an expense
 app.put("/add-expense-item/", async (req, res) => {
     const { expenseItem, username, price, date } = req.body;
+    
     try {
+        await User.findOneAndUpdate({username: username}, {$inc: {expenseTotal: price}})
+
         await User.updateOne(
             { username: username },
             {
@@ -131,7 +134,6 @@ app.put("/add-expense-item/", async (req, res) => {
                         $each: [{ expenseItem: expenseItem, price: price, date: date }]
                     }
                 },
-                $push: { expenseTotal : price,}
             }
         )
         res.send({ status: 'ok' });
@@ -145,7 +147,7 @@ app.get("/get-expense-items", async (req, res) => {
     const username = req.headers['username'];
     try {
         const user = await User.findOne(
-            { username: username }
+            { username: username },
         )
         return res.json(user.expenseItems);
     } catch (error) {
@@ -153,14 +155,28 @@ app.get("/get-expense-items", async (req, res) => {
     }
 })
 
+// get expense total
+// app.get("/get-expense-total", async (req, res) => {
+//     const username = req.headers['username'];
+//     try {
+//         const user = await User.findOne(
+//             { username: username }
+//         )
+//         return res.json(user.expenseItems);
+//     } catch (error) {
+//         return res.json({ error: "user not gotten" })
+//     }
+// })
+
 // delete an expense item
 app.delete("/delete-expense-item", async (req, res) => {
-    const { item, username } = req.body;
+    const { item, username, price } = req.body;
     try {
-        console.log(item);
+        await User.findOneAndUpdate({username: username}, {$inc: {expenseTotal: -price}})
+
         await User.updateOne(
-            { username: username},
-            { $pull: {expenseItems: {expenseItem : item}}})
+            { username: username },
+            { $pull: { expenseItems: { expenseItem: item } } })
 
         res.send({ status: 'ok' });
     } catch (error) {
@@ -189,26 +205,26 @@ app.put("/add-agenda-item/", async (req, res) => {
 })
 
 // get an agenda item
-    app.get("/get-agenda-items", async (req, res) => {
-        const username = req.headers['username'];
-        // const username = req.body.username;
-        try {
-            const user = await User.findOne(
-                { username: username }
-            )
-            return res.json(user.agendaItems);
-        } catch (error) {
-            return res.json({ error: "user not gotten" })
-        }
-    })
+app.get("/get-agenda-items", async (req, res) => {
+    const username = req.headers['username'];
+    // const username = req.body.username;
+    try {
+        const user = await User.findOne(
+            { username: username }
+        )
+        return res.json(user.agendaItems);
+    } catch (error) {
+        return res.json({ error: "user not gotten" })
+    }
+})
 
 // delete an agenda item
 app.delete("/delete-agenda-item", async (req, res) => {
-    const { username, title} = req.body;
+    const { username, title } = req.body;
     try {
         await User.updateOne(
-            { username: username},
-            { $pull: {agendaItems: {title : title}}})
+            { username: username },
+            { $pull: { agendaItems: { title: title } } })
 
         res.send({ status: 'ok' });
     } catch (error) {
