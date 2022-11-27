@@ -156,17 +156,18 @@ app.get("/get-expense-items", async (req, res) => {
 })
 
 // get expense total
-// app.get("/get-expense-total", async (req, res) => {
-//     const username = req.headers['username'];
-//     try {
-//         const user = await User.findOne(
-//             { username: username }
-//         )
-//         return res.json(user.expenseItems);
-//     } catch (error) {
-//         return res.json({ error: "user not gotten" })
-//     }
-// })
+app.get("/get-expense-total", async (req, res) => {
+    const username = req.headers['username'];
+    // const username = req.body.username;
+    try {
+        const user = await User.findOne(
+            { username: username }
+        )
+        return res.json(user.expenseTotal);
+    } catch (error) {
+        return res.json({ error: "user not gotten" })
+    }
+})
 
 // delete an expense item
 app.delete("/delete-expense-item", async (req, res) => {

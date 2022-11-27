@@ -1,10 +1,11 @@
-import React, {useEffect, useState, useRef} from 'react';
-// import ExpenseItem from './expense-item';
+import React, {useState, useRef} from 'react';
 import moment from "moment";
-import { set } from 'date-fns';
 
-function ExpenseList({ income, setIncome }) {
+function ExpenseList() {
   const [expenseItems, setExpenseItems] = useState([]);
+  const [expense, setExpense] = useState([]);
+  const [totalExpense, setTotalExpense] = useState(0);
+
   var deleteItem = "";
   var deleteItemPrice = 0;
   const desc = useRef(null);
@@ -20,7 +21,7 @@ function ExpenseList({ income, setIncome }) {
     let d = date.current.value.split("-");
     let newD = new Date(d[0], d[1] - 1, d[2]);
     
-    setIncome([...income, {
+    setExpense([...expense, {
       "desc": desc.current.value,
       "price": price.current.value,
       "date": newD.getTime()
@@ -65,9 +66,30 @@ function ExpenseList({ income, setIncome }) {
     }).then((res) => res.json())
       .then((data) => {
         setExpenseItems([...data]);
+        handleGetExpenseTotal(e)
         console.log({expenseItems})
       })
   }
+
+  const handleGetExpenseTotal = e => {
+    e.preventDefault();
+    const username = window.localStorage.getItem('username');
+    fetch("http://localhost:5000/get-expense-total/", {
+      method: "GET",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+        'username': username,
+      },
+    }).then((res) => res.json())
+      .then((data) => {
+        setTotalExpense(data);
+        console.log(totalExpense);
+      })
+  }
+
 
   const handleDelete = async e => {
     e.preventDefault();
@@ -124,6 +146,9 @@ function ExpenseList({ income, setIncome }) {
               </button>
             </div>
           ))}
+
+      <div className="total-income">$ {totalExpense} </div>
+
        {/* { income.sort(sortByDate).map((value, index) => (
            <ExpenseItem 
              key={index} 

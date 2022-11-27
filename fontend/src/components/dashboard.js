@@ -2,7 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PackingList from "./dashboardComponents/packing-list";
 import Agenda from "./dashboardComponents/agenda";
-import FinancialPlanner from "./dashboardComponents/financial-planner";
+import ExpenseList from "./dashboardComponents/expense-list";
 
 const Dashboard = props => {
 
@@ -21,7 +21,8 @@ const Dashboard = props => {
         <div className="card">
           <div className="card-body">
             <h3 className="card-title">Financial Planner</h3>
-            <FinancialPlanner></FinancialPlanner>
+            {/* <FinancialPlanner></FinancialPlanner> */}
+            <ExpenseList></ExpenseList>
           </div>
         </div>
       </div>
