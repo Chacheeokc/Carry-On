@@ -15,8 +15,8 @@ const UserDetailsSchema = new mongoose.Schema(
       title : String,
       start : Date,
       end: Date,
-    }]
-    
+    }],
+    destinations: [[]]
   },
   {
     collection: "UserInfo",

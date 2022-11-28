@@ -3,21 +3,19 @@ import { Chart } from "react-google-charts";
 import { Geography, Geographies } from "react-simple-maps"
 const google = window.google;
 
-const Destinations = props => {
+function Destinations() {
     const [newData, setNewData] = useState([
         ["Country", "Visited"],
-        ["Germany", 0],
-        ["United States", 300],
-        // ["Brazil", 400],
-        ["Canada", 500],
-        ["France", 600],
-        ["RU", 700]
+        // ["Germany", 0],
+        // ["United States", 300],
+        // // ["Brazil", 400],
+        // ["Canada", 500],
+        // ["France", 600],
+        // ["RU", 700]
     ])
-    const data = [
-        ["Country", "Visited"],
-        ["United States", 100],
-    ];
+ 
     var item = "";
+    var array = [];
 
     const options = {
         colorAxis: { colors: ["white", "#e31b23"] },
@@ -27,6 +25,70 @@ const Destinations = props => {
         // defaultColor: "#f5f5f5",
       };
 
+      const handlePut = e => {
+        const username = window.localStorage.getItem('username');
+        fetch("http://localhost:5000/add-destination", {
+          method: "PUT",
+          crossDomain: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({
+            username,
+            destination : array
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data, "userRegister");
+            handleGet(e);
+          });
+      }
+
+     const handleGet = e => {
+        e.preventDefault();
+        const username = window.localStorage.getItem('username');
+        fetch("http://localhost:5000/get-destinations", {
+          method: "GET",
+          crossDomain: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+            'username': username,
+          },
+        }).then((res) => res.json())
+          .then((data) => {
+            setNewData(data);
+            console.log(data);
+          })
+      }
+
+      const handleDelete = e => {
+        e.preventDefault();
+        const username = window.localStorage.getItem('username');
+        fetch("http://localhost:5000/delete-destination", {
+          method: "DELETE",
+          crossDomain: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({
+            username,
+            destination : array,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data, "userRegister");
+            handleGet(e);
+          });
+      }
+    
     return (
         <div >
             <Chart chartType="GeoChart" 
@@ -35,10 +97,13 @@ const Destinations = props => {
             data={newData} 
             options={options}
             />
-            {/* setItem([e.target.value, 400] */}
+            <button className="btn btn-success" onClick={(e) => { handleGet(e)}}> Get Destinations</button>
+            <br></br>
             <input className='add-item-input' onChange={(e) => {item = e.target.value} } placeholder='Add an item...'/>
-            <button className="btn btn-success" onClick={() => setNewData([...newData, [item, 400]])}> Add </button>
-          
+            <button className="btn btn-success" onClick={async (e) => {array = [item,400]; await handlePut(e) }}> Add </button>
+
+            <input className='add-item-input' onChange={(e) => {item = e.target.value} } placeholder='Delete an item...'/>
+            <button className="btn btn-success" onClick={async (e) => {array = [item,400]; await handleDelete(e) }}> Delete </button>
         </div>
         
     );
