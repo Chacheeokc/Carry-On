@@ -42,7 +42,6 @@ app.post("/register", async (req, res) => {
             expenseItems: [],
             expenseTotal: 0,
             agendaItems: [],
-            // TODO do I need to add expenseItems and their fields etc. here?
         });
         res.send({ status: 'ok' });
     } catch (error) {

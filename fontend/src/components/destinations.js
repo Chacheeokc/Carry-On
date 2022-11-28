@@ -1,27 +1,23 @@
-import React from "react";
+import React, {useState} from "react";
 import { Chart } from "react-google-charts";
 import { Geography, Geographies } from "react-simple-maps"
 const google = window.google;
 
 const Destinations = props => {
-    const data = [
+    const [newData, setNewData] = useState([
         ["Country", "Visited"],
         ["Germany", 0],
         ["United States", 300],
-        ["Brazil", 400],
+        // ["Brazil", 400],
         ["Canada", 500],
         ["France", 600],
         ["RU", 700]
+    ])
+    const data = [
+        ["Country", "Visited"],
+        ["United States", 100],
     ];
-
-    // var data = google.visualization.arrayToDataTable([
-    //     ['Country', 'Popularity'],
-    //     ['South America', 600],
-    //     ['Canada', 500],
-    //     ['France', 600],
-    //     ['Russia', 700],
-    //     ['Australia', 600]
-    //   ]);
+    var item = "";
 
     const options = {
         colorAxis: { colors: ["white", "#e31b23"] },
@@ -31,26 +27,20 @@ const Destinations = props => {
         // defaultColor: "#f5f5f5",
       };
 
-      const thisHappens = e =>{
-        console.log("youclicked it")
-      }
-    
-      
-
     return (
         <div >
             <Chart chartType="GeoChart" 
             width="100%" 
             height="450px" 
-            data={data} 
+            data={newData} 
             options={options}
-            regionClick={thisHappens}
             />
+            {/* setItem([e.target.value, 400] */}
+            <input className='add-item-input' onChange={(e) => {item = e.target.value} } placeholder='Add an item...'/>
+            <button className="btn btn-success" onClick={() => setNewData([...newData, [item, 400]])}> Add </button>
+          
         </div>
-        // <div>
-        //     <Geographies> </Geographies>
-        // </div>
-
+        
     );
 };
 

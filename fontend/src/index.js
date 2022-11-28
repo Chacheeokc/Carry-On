@@ -4,9 +4,6 @@ import App from './App';
 import {BrowserRouter} from "react-router-dom";
 import './index.css';
 
-// const rootElement = document.getElementById("root");
-// const root = createRoot(rootElement);
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
