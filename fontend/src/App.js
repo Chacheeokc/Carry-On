@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, Redirect } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./components/login";
 import Dashboard from "./components/dashboard";
@@ -13,7 +13,6 @@ import Home from "./components/home";
 // similarly, navbar-nav indicates the navigation part of the nav bar
 // Clicking restaurants will take you to restaurants page
 
-//*** is using useState non-restful? */
 function App() {
 
   function handleSubmit(e) {
@@ -41,7 +40,7 @@ function App() {
   return (
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <a href="/home" className="navbar-brand">
+        <a href="/" className="navbar-brand">
           <h1> Carry On </h1>
         </a>
         <div className="navbar-nav mr-auto">
@@ -55,9 +54,7 @@ function App() {
                 Login
               </Link>
             )}
-
           </li>
-
           <li className="nav-item">
             <Link to={"/dashboard"} className="nav-link">
               Dashboard
@@ -71,14 +68,19 @@ function App() {
         </div>
       </nav>
 
-      <div className="container mt-3">
-        <Switch>
-        <Route
+      <div>
+          <Route exact path="/"> 
+              <Redirect to="/home" />
+          </Route>
+          <Route
             path="/home"
             render={(props) => (
               <Home {...props} />
             )}
           />
+        </div>
+        <div className="container mt-3 px-1">
+          <Switch>
           <Route
             path="/login"
             render={(props) => (
@@ -88,28 +90,23 @@ function App() {
           <Route
             path="/dashboard"
             render={(props) => (
-              // removed user={user} from below
               <Dashboard {...props} />
             )}
           />
           <Route
             path="/destinations"
             render={(props) => (
-              // removed user={user} from below
               <Destinations {...props} />
             )}
           />
           <Route
             path="/register"
             render={(props) => (
-              // removed user={user} from below
               <Register {...props} />
             )}
           />
-
         </Switch>
       </div>
-
     </div>
   );
 }

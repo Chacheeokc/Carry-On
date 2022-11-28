@@ -2,32 +2,11 @@ import React, { Component, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle, faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+// import "../index.css"
+import "./packing-list.css";
 
 
 export default class PackingList extends Component {
-  // old stuff
-  // const [items, setItems] = useState([
-  //     // { itemName: 'item 1', isSelected: false },
-  //     // { itemName: 'item 2',  isSelected: true },
-  //     // { itemName: 'item 3',  isSelected: false },
-  //   ]);
-  //   const [inputValue, setInputValue] = useState('');
-  //   const handleAddButtonClick = () => {
-  //     const newItem = {
-  //       itemName: inputValue,
-  //       isSelected: false,
-  //     };
-  //     const newItems = [...items, newItem];
-  //     setItems(newItems);
-  //     setInputValue('');
-  //   };
-  //   const toggleComplete = (index) => {
-  //     const newItems = [...items];
-  //     newItems[index].isSelected = !newItems[index].isSelected;
-  //     setItems(newItems);
-  //   };
-
-  // new stuff
   constructor(props) {
     super(props);
     this.state = {

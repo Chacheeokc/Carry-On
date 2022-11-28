@@ -122,7 +122,7 @@ function ExpenseList() {
     <div>
     <form onSubmit={handlePut}>
       <div>
-        <input type="text" name="desc" id="desc" placeholder="Expense Description..." ref={desc} /> 
+        <input type="text" name="desc" id="desc" placeholder="Expense Description..." ref={desc}/> 
         <input type="number" name="price" id="price" placeholder="Price..." ref={price}/>
         <input type="text" name="date" id="date" placeholder="Date of expense... (mm/dd/yy)" ref={date} />
         <br></br>

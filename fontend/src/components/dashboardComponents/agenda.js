@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import DateTimePicker from "react-datetime-picker"
 import React, {useState} from "react";
 import { Calendar, dateFnsLocalizer} from "react-big-calendar";
-// import "./App.css";
+// import ".../App.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 
@@ -26,7 +26,6 @@ const events = []
 
 function Agenda(){
   const [newEvent, setNewEvent] = useState({title : "", start: "", end: ""})
-  const [deleteEvent, setDeleteEvent] = useState("nothinghappend")
   const [allEvents, setAllEvents] = useState(events)
 
   const handlePut = e => {
@@ -39,7 +38,6 @@ function Agenda(){
          Accept: "application/json",
          "Access-Control-Allow-Origin": "*",
        },
-       // might need to rename everything to match start, title, end?
        body: JSON.stringify({
          username,
          title : newEvent.title,
@@ -69,22 +67,11 @@ function Agenda(){
       },
     }).then((res) => res.json())
       .then((data) => {
-        // this.setState({ packingItems: [...data] });
-        // console.log(this.state.packingItems);
         console.log(allEvents);
         setAllEvents([...data]);
         console.log(allEvents);
       })
    }
-
-  // const handleEventSelection = async (e) => {
-  //   console.log(e.title);
-  //   // setDeleteEvent([...deleteEvent, e.title]);
-  //   //TODO stuck here, can't get setDeleteEvent to set to anything but the start val
-  //   await setDeleteEvent(e.title);
-  //   console.log(deleteEvent);
-  //   handleDelete(e);
-  // };
 
  const handleDelete = async e => {
     e.isDelete = true;
