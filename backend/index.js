@@ -42,6 +42,7 @@ app.post("/register", async (req, res) => {
             expenseItems: [],
             expenseTotal: 0,
             agendaItems: [],
+            destinations: [["Country", "Visited"]]
         });
         res.send({ status: 'ok' });
     } catch (error) {
@@ -229,6 +230,47 @@ app.delete("/delete-agenda-item", async (req, res) => {
         res.send({ status: 'ok' });
     } catch (error) {
         return res.json({ error: "item was not deleted from user's agenda" })
+    }
+})
+
+// add a previous destination
+app.put("/add-destination", async (req, res) => {
+    const { username, destination} = req.body;
+    try {
+        await User.updateOne(
+            { username: username },
+            { $push: { destinations: destination}}
+        )
+        res.send({ status: 'ok' });
+    } catch (error) {
+        return res.json({ error: "user's destinations were not updated" })
+    }
+})
+
+app.get("/get-destinations", async (req, res) => {
+    const username = req.headers['username'];
+    try {
+        const user = await User.findOne(
+            { username: username }
+        )
+        return res.json(user.destinations);
+        
+    } catch (error) {
+        return res.json({ error: "user not gotten" })
+    }
+})
+
+// delete a destination
+app.delete("/delete-destination", async (req, res) => {
+    const { username, destination } = req.body;
+    try {
+        await User.updateOne(
+            { username: username },
+            { $pull: { destinations: destination } }
+        )
+        res.send({ status: 'ok' });
+    } catch (error) {
+        return res.json({ error: "item was not deleted from user's destination" })
     }
 })
 
