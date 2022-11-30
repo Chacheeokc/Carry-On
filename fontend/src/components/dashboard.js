@@ -10,7 +10,7 @@ const Dashboard = props => {
 
   return (
     <div className="row">
-      <div class="col-4">
+      <div class="col-6">
         <div className="card" >
           <div className="card-body">
             <h3 className="card-title"> Agenda</h3>
@@ -19,7 +19,7 @@ const Dashboard = props => {
         </div>
       </div>
 
-      <div class="col-4">
+      <div class="col-3">
         <div className="card">
           <div className="card-body">
             <h3 className="card-title">Financial Planner</h3>
@@ -28,7 +28,7 @@ const Dashboard = props => {
         </div>
       </div>
 
-      <div class="col-4">
+      <div class="col-3">
         <div class="card">
           <div class="card-body">
             <h3 class="card-title"> Packing List</h3>

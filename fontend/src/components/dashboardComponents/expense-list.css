@@ -1,0 +1,36 @@
+input[type=text] {
+    padding-left: 20px;
+}
+
+input[type=number] {
+    padding-left: 10px;
+}
+
+.remove-button {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-weight: 600;
+    transition: 0.2s;
+    border: 0;
+    background-color: white;
+}
+
+.align-right{
+    position: absolute;
+    right: 40px;
+}
+
+.financial-item{
+    margin-right: 70px;
+  }
+
+  .total-income {
+	color: var(--grey);
+	font-size: 28px;
+	font-weight: 900;
+	background-color: #DFDFDF;
+	padding: 5px 25px;
+	border-radius: 8px;
+}

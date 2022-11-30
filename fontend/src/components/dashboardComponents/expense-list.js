@@ -1,5 +1,5 @@
-import React, {useState, useRef} from 'react';
-import moment from "moment";
+import React, {useState, useRef, useEffect} from 'react';
+import "./expense-list.css"
 
 function ExpenseList() {
   const [expenseItems, setExpenseItems] = useState([]);
@@ -9,22 +9,21 @@ function ExpenseList() {
   var deleteItem = "";
   var deleteItemPrice = 0;
   const desc = useRef(null);
-  const date = useRef(null);
   const price = useRef(null);
 
-  const sortByDate = (a, b) => {
-    return a.date - b.date;
-  }
+  useEffect(() => {
+    let ignore = false;
+    
+    if (!ignore)  handleGet();
+    return () => { ignore = true; }
+    },[]);
 
   const handlePut = e => {
     e.preventDefault();
-    let d = date.current.value.split("-");
-    let newD = new Date(d[0], d[1] - 1, d[2]);
     
     setExpense([...expense, {
       "desc": desc.current.value,
       "price": price.current.value,
-      "date": newD.getTime()
     }]);
 
     const username = window.localStorage.getItem('username');
@@ -40,7 +39,6 @@ function ExpenseList() {
         username,
         expenseItem : desc.current.value,
         price : price.current.value,
-        date : date.current.value
       }),
     })
       .then((res) => res.json())
@@ -51,7 +49,7 @@ function ExpenseList() {
   }
 
   const handleGet = e => {
-    e.preventDefault();
+    // e.preventDefault();
     const username = window.localStorage.getItem('username');
     console.log(username);
     fetch("http://localhost:5000/get-expense-items/", {
@@ -124,40 +122,35 @@ function ExpenseList() {
       <div>
         <input type="text" name="desc" id="desc" placeholder="Expense Description..." ref={desc}/> 
         <input type="number" name="price" id="price" placeholder="Price..." ref={price}/>
-        <input type="text" name="date" id="date" placeholder="Date of expense... (mm/dd/yy)" ref={date} />
+        {/* <input type="text" name="date" id="date" placeholder="Date of expense... (mm/dd/yy)" ref={date} /> */}
         <br></br>
-        <input type="submit" value="Add Expense" />
+        <input className="btn btn-success" type="submit" value="Add Expense" />
       </div>
     </form>
 
     <div className="expense-list">
-      <button className="btn btn-success" onClick={async (e) =>{
+      {/* <button className="btn btn-success" onClick={async (e) =>{
         await handleGet(e)
-        }}> Get expenses</button>
-      {expenseItems.sort(sortByDate).map((expenseItem, idx) => (
+        }}> Get expenses</button> */}
+        <br></br>
+      {expenseItems.map((expenseItem, idx) => (
             <div key={idx}>
-               <div>{expenseItem.expenseItem} {expenseItem.price} {moment(expenseItem.date).format('MM/DD/YY')} </div>
-               <button className="remove-item" onClick={async (e) => {
+              {/* {moment(expenseItem.date).format('MM/DD/YY')} was included below */}
+              <span className='d-flex align-items-center'>
+               <div className="financial-item">{expenseItem.expenseItem}</div>
+               <div className="align-right"> ${expenseItem.price} </div>
+               <button className="remove-button" onClick={async (e) => {
                 deleteItem = expenseItem.expenseItem;
                 deleteItemPrice = expenseItem.price;
                 await handleDelete(e);
               }}>
-                delete
+                X
               </button>
+              </span>
             </div>
           ))}
-
+      <br></br>
       <div className="total-income">$ {totalExpense} </div>
-
-       {/* { income.sort(sortByDate).map((value, index) => (
-           <ExpenseItem 
-             key={index} 
-             income={value} 
-             index={index} 
-             removeIncome={removeIncome}
-           />
-         ))
-       } */}
     </div>
     </div>
   )

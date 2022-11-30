@@ -1,7 +1,6 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Chart } from "react-google-charts";
-import { Geography, Geographies } from "react-simple-maps"
-const google = window.google;
+import "./destinations.css"
 
 function Destinations() {
     const [newData, setNewData] = useState([
@@ -18,12 +17,19 @@ function Destinations() {
     var array = [];
 
     const options = {
-        colorAxis: { colors: ["white", "#e31b23"] },
+        colorAxis: { colors: ["white", "green"] },
         backgroundColor: "#81d4fa",
         legend: "none",
         // datalessRegionColor: "#f8bbd0",
         // defaultColor: "#f5f5f5",
       };
+
+      useEffect(() => {
+        let ignore = false;
+        
+        if (!ignore)  handleGet();
+        return () => { ignore = true; }
+        },[]);
 
       const handlePut = e => {
         const username = window.localStorage.getItem('username');
@@ -48,7 +54,7 @@ function Destinations() {
       }
 
      const handleGet = e => {
-        e.preventDefault();
+        // e.preventDefault();
         const username = window.localStorage.getItem('username');
         fetch("http://localhost:5000/get-destinations", {
           method: "GET",
@@ -97,13 +103,13 @@ function Destinations() {
             data={newData} 
             options={options}
             />
-            <button className="btn btn-success" onClick={(e) => { handleGet(e)}}> Get Destinations</button>
+            {/* <button className="btn btn-success" onClick={(e) => { handleGet(e)}}> Get Destinations</button> */}
             <br></br>
-            <input className='add-item-input' onChange={(e) => {item = e.target.value} } placeholder='Add an item...'/>
-            <button className="btn btn-success" onClick={async (e) => {array = [item,400]; await handlePut(e) }}> Add </button>
 
-            <input className='add-item-input' onChange={(e) => {item = e.target.value} } placeholder='Delete an item...'/>
-            <button className="btn btn-success" onClick={async (e) => {array = [item,400]; await handleDelete(e) }}> Delete </button>
+            <input type="text" onChange={(e) => {item = e.target.value} } placeholder='Add an item...'/>
+            <button className="destination-button" onClick={async (e) => {array = [item,400]; await handlePut(e) }}> Add </button>
+            <input type="text" onChange={(e) => {item = e.target.value} } placeholder='Delete an item...'/>
+            <button className="destination-button" onClick={async (e) => {array = [item,400]; await handleDelete(e) }}> Delete </button>
         </div>
         
     );

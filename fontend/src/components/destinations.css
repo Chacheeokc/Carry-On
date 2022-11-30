@@ -1,0 +1,33 @@
+input, textarea{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 30px;
+    margin: 5px 10px;
+    border: 2px solid #eee;
+    box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
+    border-radius:10px;
+    width: 90%;
+    font-family:inherit;
+    font-size: inherit;
+}
+
+input[type=text] {
+    padding-left: 10px;
+  }
+
+.destination-button{
+    background: #198754; /* Green */
+    border: none;
+    color: white;
+    padding: 12px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 16px;
+  }
+
+  .destination-button:hover {
+    background-color: #147246; /* Green */
+    color: white;
+  }

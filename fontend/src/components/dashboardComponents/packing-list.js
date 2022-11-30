@@ -1,10 +1,9 @@
-import React, { Component, useState } from "react";
+import React, { Component, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle, faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 // import "../index.css"
 import "./packing-list.css";
-
 
 export default class PackingList extends Component {
   constructor(props) {
@@ -18,7 +17,14 @@ export default class PackingList extends Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
 
+  componentDidMount() {
+    this.handleGet();
+  }
 
+  handleCheckboxClick(){
+
+  }
+  
   handlePut(e) {
     e.preventDefault();
     const { item } = this.state;
@@ -45,7 +51,6 @@ export default class PackingList extends Component {
   }
 
   handleGet(e) {
-    e.preventDefault();
     const username = window.localStorage.getItem('username');
     fetch("http://localhost:5000/get-packing-items/", {
       method: "GET",
@@ -97,26 +102,39 @@ export default class PackingList extends Component {
             await this.handlePut(e)
             this.setState({ item: "" })
           }} >
-            <input onChange={(e) => this.setState({ item: e.target.value })} className='add-item-input' placeholder='Add an item...' value={this.state.item} />
-            <button className="btn btn-success" > Add </button>
+            <label>
+            <input type="text" onChange={(e) => this.setState({ item: e.target.value })} className='add-item-input' placeholder='Add an item...'  />
+            <button className="add-button" > Add </button>
+            </label>
+            <br></br>
+
           </form>
-          <button className="btn btn-success" onClick={this.handleGet}> Get packing list</button>
+       
+          {/* <button className="btn btn-success" onClick={this.handleGet}> Get packing list</button> */}
           {this.state.packingItems.map((packingItem, idx) => (
             <div key={idx}>
-              <div>{packingItem} </div>
-              <button className="remove-item" onClick={async (e) => {
+              <span className='d-flex align-items-center'>
+
+              <input type='checkbox' id="cbox2" value="second_checkbox"/> <label for="cbox2">
+
+              <div className="list-item">{packingItem}</div>
+              <button className="remove-button" onClick={async (e) => {
                 await this.setState({ item: packingItem });
                 await this.handleDelete(e);
               }}>
-                delete
+                X
               </button>
-
+              </label>
+              </span>
+              <br></br>
             </div>
+            
           ))}
+
+
 
         </div>
       </div>
     );
   }
 }
-
