@@ -4,9 +4,9 @@ import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 import "react-datepicker/dist/react-datepicker.css";
 import DateTimePicker from "react-datetime-picker"
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Calendar, dateFnsLocalizer} from "react-big-calendar";
-// import ".../App.css";
+import "./agenda.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 
@@ -24,9 +24,17 @@ const localizer = dateFnsLocalizer({
 
 const events = []
 
+
 function Agenda(){
   const [newEvent, setNewEvent] = useState({title : "", start: "", end: ""})
   const [allEvents, setAllEvents] = useState(events)
+
+  useEffect(() => {
+    let ignore = false;
+    
+    if (!ignore)  handleGet();
+    return () => { ignore = true; }
+    },[]);
 
   const handlePut = e => {
     const username = window.localStorage.getItem('username');
@@ -52,9 +60,9 @@ function Agenda(){
    }
 
    const handleGet = e =>{
-    if(!(e?.isDelete)){
-      e.preventDefault();
-    }
+    // if(!(e?.isDelete)){
+    //   e.preventDefault();
+    // }
     const username = window.localStorage.getItem('username');
     fetch("http://localhost:5000/get-agenda-items/", {
       method: "GET",
@@ -74,7 +82,7 @@ function Agenda(){
    }
 
  const handleDelete = async e => {
-    e.isDelete = true;
+    // e.isDelete = true;
     const title = e.title; 
     console.log(title);
     const username = window.localStorage.getItem('username');
@@ -101,15 +109,15 @@ function Agenda(){
   return(
     <div>
       <h5> Add New Event </h5>
-      <div>
+      <div className= "align-items-center">
         
-        <input type = "text" placeholder="Add Title" style={{width:"20%", marginRight: "10px"}} value={newEvent.title} onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}/>
+        <input className="agenda-input" placeholder="Add Title" value={newEvent.title} onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}/>
         <br></br>
-        <DateTimePicker placeholderText="Start Date" style={{marginRight: "10px"}} selected ={newEvent.start} onChange={(start)=> setNewEvent({...newEvent, start : start})}></DateTimePicker>
-        <DateTimePicker placeholderText="End Date" selected ={newEvent.end} onChange={(end)=> setNewEvent({...newEvent, end : end})}></DateTimePicker>
-        <button className="btn btn-success" style={{marginTop: "10px"}} onClick={async(e) => {await handlePut(e)}}> Add event</button>
+        <DateTimePicker  className="box" placeholderText="Start Date" selected ={newEvent.start} onChange={(start)=> setNewEvent({...newEvent, start : start})}></DateTimePicker>
+        <DateTimePicker className="box"  placeholderText="End Date" selected ={newEvent.end} onChange={(end)=> setNewEvent({...newEvent, end : end})}></DateTimePicker>
+        <button className="box" style={{marginTop: "10px"}} onClick={async(e) => {await handlePut(e)}}> Add event</button>
         <br></br>
-        <button className="btn btn-success" onClick={async(e) => {await handleGet(e)}}> get your events </button>
+        {/* <button className="btn btn-success" onClick={async(e) => {await handleGet(e)}}> get your events </button> */}
       </div>
      
       <Calendar 

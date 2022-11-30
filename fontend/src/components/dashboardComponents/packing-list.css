@@ -1,3 +1,68 @@
-.agenda-button {
-    background-color: red;
+input[type=text] {
+  padding-left: 10px;
+}
+
+input, textarea{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 30px;
+  margin: 5px 10px;
+  border: 2px solid #eee;
+  box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
+  border-radius:10px;
+  width: 90%;
+  font-family:inherit;
+  font-size: inherit;
+}
+
+input[type=checkbox]:checked + label {
+    text-decoration: line-through;
+  } 
+
+  input[type=checkbox] {
+    vertical-align: left;
+    position: relative;
+    bottom: 1px;
+    box-shadow: 0;
+    border-radius: 0px;
+    width: 10%;
+    flex: none;
+    padding-left: 0px;
+}
+  
+label {
+    display: flex;
+    align-items: top;
+}
+
+.add-button{
+  background: #198754; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 16px;
+}
+
+.add-button:hover {
+  background-color: #147246; /* Green */
+  color: white;
+}
+
+.remove-button{
+  position:absolute;
+  right: 10px;
+	cursor: pointer;
+  margin-left: 10px;
+	font-weight: 600;
+	transition: 0.2s;
+  border: 0;
+  background-color: white;
+}
+
+.list-item{
+  margin-right: 20px;
 }
