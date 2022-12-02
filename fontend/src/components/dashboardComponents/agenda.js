@@ -10,6 +10,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-datepicker/dist/react-datepicker.css";
 
+// get local time zone
 const locales = {
   'en-US': require("date-fns/locale/en-US")
 }
@@ -22,12 +23,15 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
+// constant for events
 const events = []
 
+// agenda component
 function Agenda() {
   const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" })
   const [allEvents, setAllEvents] = useState(events)
 
+  // call GET for agenda on render
   useEffect(() => {
     let ignore = false;
 
@@ -35,6 +39,7 @@ function Agenda() {
     return () => { ignore = true; }
   }, []);
 
+  // client-side add agenda item
   const handlePut = e => {
     const username = window.localStorage.getItem('username');
     fetch("http://localhost:5000/add-agenda-item", {
@@ -59,6 +64,7 @@ function Agenda() {
       });
   }
 
+  // client-side get agenda items
   const handleGet = e => {
     const username = window.localStorage.getItem('username');
     fetch("http://localhost:5000/get-agenda-items/", {
@@ -78,6 +84,7 @@ function Agenda() {
       })
   }
 
+  // client-side delete agenda item
   const handleDelete = async e => {
     const title = e.title;
     console.log(title);
@@ -102,6 +109,7 @@ function Agenda() {
       });
   }
 
+  // agenda HTML components
   return (
     <div>
       <h5> Add a new event: </h5>

@@ -15,6 +15,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// Connect to mongoDB Atlas database
 mongoose.connect(process.env.RESTREVIEWS_DB_URI, {
     useNewUrlParser: true,
 })
@@ -23,6 +24,7 @@ mongoose.connect(process.env.RESTREVIEWS_DB_URI, {
     })
     .catch((e) => console.log(e));
 
+// get our user model
 const User = mongoose.model("UserInfo", UserDetailsSchema);
 
 // Create a user
@@ -208,7 +210,6 @@ app.put("/add-agenda-item/", async (req, res) => {
 // get an agenda item
 app.get("/get-agenda-items", async (req, res) => {
     const username = req.headers['username'];
-    // const username = req.body.username;
     try {
         const user = await User.findOne(
             { username: username }
@@ -247,6 +248,7 @@ app.put("/add-destination", async (req, res) => {
     }
 })
 
+// get previous destinations
 app.get("/get-destinations", async (req, res) => {
     const username = req.headers['username'];
     try {

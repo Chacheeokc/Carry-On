@@ -4,6 +4,7 @@ import PackingList from "./dashboardComponents/packing-list";
 import Agenda from "./dashboardComponents/agenda";
 import ExpenseList from "./dashboardComponents/expense-list";
 
+// organization for dashboard page into card format
 const Dashboard = props => {
 
   return (

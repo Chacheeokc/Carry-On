@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { Chart } from "react-google-charts";
 import "./destinations.css"
 
+// map of previous destinations component
 function Destinations() {
     const [newData, setNewData] = useState([
         ["Country", "Visited"],
@@ -16,6 +17,7 @@ function Destinations() {
         legend: "none",
       };
 
+      // call get destinations on render
       useEffect(() => {
         let ignore = false;
         
@@ -23,6 +25,7 @@ function Destinations() {
         return () => { ignore = true; }
         },[]);
 
+          // client-side add previous destination
       const handlePut = e => {
         const username = window.localStorage.getItem('username');
         fetch("http://localhost:5000/add-destination", {
@@ -45,6 +48,7 @@ function Destinations() {
           });
       }
 
+        // client-side get previous destinations
      const handleGet = e => {
         const username = window.localStorage.getItem('username');
         fetch("http://localhost:5000/get-destinations", {
@@ -63,6 +67,7 @@ function Destinations() {
           })
       }
 
+        // client-side delete previous destination
       const handleDelete = e => {
         e.preventDefault();
         const username = window.localStorage.getItem('username');
@@ -85,7 +90,8 @@ function Destinations() {
             handleGet(e);
           });
       }
-    
+
+    // HTML for previous destinations component
     return (
         <div >
             <Chart chartType="GeoChart" 

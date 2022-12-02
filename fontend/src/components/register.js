@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+// register page
 export default class Register extends Component {
   constructor(props) {
     super(props);
@@ -10,6 +11,7 @@ export default class Register extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // client-side for registering a user
   handleSubmit(e) {
     e.preventDefault();
     const { username, password } = this.state;
@@ -34,6 +36,7 @@ export default class Register extends Component {
     console.log(username);
   }
 
+  // HTML for registration page
   render() {
     return (
       <div className="row" class="col d-flex justify-content-center">

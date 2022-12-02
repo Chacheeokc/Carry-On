@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./packing-list.css";
 
+// Packing List component
 export default class PackingList extends Component {
   constructor(props) {
     super(props);
@@ -13,10 +14,12 @@ export default class PackingList extends Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
 
+  // get packing list on render
   componentDidMount() {
     this.handleGet();
   }
 
+  // client-side add packing item
   handlePut(e) {
     e.preventDefault();
     const { item } = this.state;
@@ -42,6 +45,7 @@ export default class PackingList extends Component {
       });
   }
 
+    // client-side get packing items
   handleGet(e) {
     const username = window.localStorage.getItem('username');
     fetch("http://localhost:5000/get-packing-items/", {
@@ -60,6 +64,7 @@ export default class PackingList extends Component {
       })
   }
 
+    // client-side delete packing item
   handleDelete(e) {
     e.preventDefault();
     const { item } = this.state;
@@ -85,7 +90,7 @@ export default class PackingList extends Component {
       });
   }
 
-
+  // HTML for packing list
   render() {
     return (
       <div className='app-background' >

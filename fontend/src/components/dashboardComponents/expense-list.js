@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import "./expense-list.css"
 
+// financial planner component
 function ExpenseList() {
   const [expenseItems, setExpenseItems] = useState([]);
   const [expense, setExpense] = useState([]);
@@ -11,6 +12,7 @@ function ExpenseList() {
   const desc = useRef(null);
   const price = useRef(null);
 
+  // call GET for expense items on render
   useEffect(() => {
     let ignore = false;
 
@@ -18,6 +20,7 @@ function ExpenseList() {
     return () => { ignore = true; }
   }, []);
 
+  // client-side add expense item
   const handlePut = e => {
     e.preventDefault();
 
@@ -48,6 +51,7 @@ function ExpenseList() {
       });
   }
 
+  // client-side get expense items
   const handleGet = e => {
     const username = window.localStorage.getItem('username');
     console.log(username);
@@ -63,13 +67,13 @@ function ExpenseList() {
     }).then((res) => res.json())
       .then((data) => {
         setExpenseItems([...data]);
-        handleGetExpenseTotal(e)
-        console.log({ expenseItems })
+        handleGetExpenseTotal();
+        console.log({ expenseItems });
       })
   }
 
-  const handleGetExpenseTotal = e => {
-    e.preventDefault();
+  // client-side get expense items total
+  function handleGetExpenseTotal() {
     const username = window.localStorage.getItem('username');
     fetch("http://localhost:5000/get-expense-total/", {
       method: "GET",
@@ -88,6 +92,7 @@ function ExpenseList() {
   }
 
 
+  // client-side delete item
   const handleDelete = async e => {
     e.preventDefault();
     const expense = deleteItem;
@@ -115,6 +120,7 @@ function ExpenseList() {
       });
   }
 
+  // HTML for expenses component
   return (
     <div>
       <form onSubmit={handlePut}>

@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import "./home.css";
+
+// Landing page
 export default class Home extends Component {
   constructor(props) {
     super(props);
   }
 
+  // HTML for landing/welcome page
   render() {
     return (
       <div >
