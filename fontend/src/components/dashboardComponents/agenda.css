@@ -1,18 +1,41 @@
-.agenda-input{
-    width: 100%;
-    /* padding-left: 10px;
-    padding-right: 0px;
-    display: flex;
-    justify-content: center; */
+/* Styling for the agenda component */
+
+.agenda-input {
+  width: 100%;
+  padding-left: 10px;
 }
 
-.align-items-center{
-width: 90%;
+.align-items-center {
+  width: 90%;
   margin: 0 auto;
-  /* display: flex;
-  justify-content: center; */
 }
 
-.box{
-    width: 100px;
+.agenda-button {
+  background: #198754;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 16px;
+}
+
+h5 {
+  margin-top: 20px;
+}
+
+.date-picker-input[type=text] {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 30px;
+  margin: 5px 10px;
+  border: 2px solid #eee;
+  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  width: 90%;
+  font-family: inherit;
+  font-size: inherit;
 }

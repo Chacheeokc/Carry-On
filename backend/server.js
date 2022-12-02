@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import users from "./api/user.route.js";
 
+//TODO is this necessary?
 const app = express();
 
 app.use(cors());

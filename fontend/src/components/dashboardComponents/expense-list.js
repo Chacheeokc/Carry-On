@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import "./expense-list.css"
 
 function ExpenseList() {
@@ -13,14 +13,14 @@ function ExpenseList() {
 
   useEffect(() => {
     let ignore = false;
-    
-    if (!ignore)  handleGet();
+
+    if (!ignore) handleGet();
     return () => { ignore = true; }
-    },[]);
+  }, []);
 
   const handlePut = e => {
     e.preventDefault();
-    
+
     setExpense([...expense, {
       "desc": desc.current.value,
       "price": price.current.value,
@@ -37,8 +37,8 @@ function ExpenseList() {
       },
       body: JSON.stringify({
         username,
-        expenseItem : desc.current.value,
-        price : price.current.value,
+        expenseItem: desc.current.value,
+        price: price.current.value,
       }),
     })
       .then((res) => res.json())
@@ -49,7 +49,6 @@ function ExpenseList() {
   }
 
   const handleGet = e => {
-    // e.preventDefault();
     const username = window.localStorage.getItem('username');
     console.log(username);
     fetch("http://localhost:5000/get-expense-items/", {
@@ -65,7 +64,7 @@ function ExpenseList() {
       .then((data) => {
         setExpenseItems([...data]);
         handleGetExpenseTotal(e)
-        console.log({expenseItems})
+        console.log({ expenseItems })
       })
   }
 
@@ -104,9 +103,9 @@ function ExpenseList() {
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
-        item : expense,
+        item: expense,
         username,
-        price : expensePrice
+        price: expensePrice
       }),
     })
       .then((res) => res.json())
@@ -118,40 +117,35 @@ function ExpenseList() {
 
   return (
     <div>
-    <form onSubmit={handlePut}>
-      <div>
-        <input type="text" name="desc" id="desc" placeholder="Expense Description..." ref={desc}/> 
-        <input type="number" name="price" id="price" placeholder="Price..." ref={price}/>
-        {/* <input type="text" name="date" id="date" placeholder="Date of expense... (mm/dd/yy)" ref={date} /> */}
-        <br></br>
-        <input className="btn btn-success" type="submit" value="Add Expense" />
-      </div>
-    </form>
+      <form onSubmit={handlePut}>
+        <div>
+          <input type="text" name="desc" id="desc" placeholder="Expense Description..." ref={desc} />
+          <input type="number" name="price" id="price" placeholder="Price..." ref={price} />
+          <br></br>
+          <input className="btn btn-success" type="submit" value="Add Expense" />
+        </div>
+      </form>
 
-    <div className="expense-list">
-      {/* <button className="btn btn-success" onClick={async (e) =>{
-        await handleGet(e)
-        }}> Get expenses</button> */}
+      <div className="expense-list">
         <br></br>
-      {expenseItems.map((expenseItem, idx) => (
-            <div key={idx}>
-              {/* {moment(expenseItem.date).format('MM/DD/YY')} was included below */}
-              <span className='d-flex align-items-center'>
-               <div className="financial-item">{expenseItem.expenseItem}</div>
-               <div className="align-right"> ${expenseItem.price} </div>
-               <button className="remove-button" onClick={async (e) => {
+        {expenseItems.map((expenseItem, idx) => (
+          <div key={idx}>
+            <span className='d-flex align-items-center'>
+              <div className="financial-item">{expenseItem.expenseItem}</div>
+              <div className="align-right"> ${expenseItem.price} </div>
+              <button className="remove-button" onClick={async (e) => {
                 deleteItem = expenseItem.expenseItem;
                 deleteItemPrice = expenseItem.price;
                 await handleDelete(e);
               }}>
                 X
               </button>
-              </span>
-            </div>
-          ))}
-      <br></br>
-      <div className="total-income">$ {totalExpense} </div>
-    </div>
+            </span>
+          </div>
+        ))}
+        <br></br>
+        <div className="total-income">$ {totalExpense} </div>
+      </div>
     </div>
   )
 }

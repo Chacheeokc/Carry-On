@@ -1,3 +1,5 @@
+/* Styling for packing list */
+
 input[type=text] {
   padding-left: 10px;
 }
@@ -65,4 +67,5 @@ label {
 
 .list-item{
   margin-right: 20px;
+  text-align: left;
 }

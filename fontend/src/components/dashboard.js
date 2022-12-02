@@ -3,8 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import PackingList from "./dashboardComponents/packing-list";
 import Agenda from "./dashboardComponents/agenda";
 import ExpenseList from "./dashboardComponents/expense-list";
-// import "../index.css"
-
 
 const Dashboard = props => {
 

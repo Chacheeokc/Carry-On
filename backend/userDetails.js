@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Create user templates for mongoDB 
 const UserDetailsSchema = new mongoose.Schema(
   {
     username: { type: String, unique: true },
@@ -8,7 +9,6 @@ const UserDetailsSchema = new mongoose.Schema(
     expenseItems: [{
       expenseItem : String, 
       price : Number, 
-      date : Date,
     }],
     expenseTotal: Number,
     agendaItems: [{
