@@ -4,11 +4,11 @@
 Travelers
 
 ### TEAM MEMBERS:
-Lydia Bloomfield - Frontend 
+Lydia Bloomfield - Full Stack 
 
-Gabe Chavez - Backend
+Gabe Chavez - Frontend
 
-Luke Kirk - Project Manager, Full Stack
+Luke Kirk - Project Manager
 
 ### OUR PROJECT NAME:
 Carry On
@@ -18,11 +18,11 @@ Carry on is a product FOR individuals interested in traveling anywhere in the wo
  create packing lists, record and check off the places they have traveled, plan financially for each day, and lastly, construct an agenda. UNLIKE other travel planners and note applications, Carry On allows you to manage travel related tasks before, after, and during your trip through an easy-to-use interface. OUR product is designed to take all the necessary itineraries, lists, and budget planning for your next getaway and consolidate them in one simple space. 
 
 ### SPECIFIC FEATURES:
-Log-in page
-Registration page
-Trip agenda
-Packing List
-Map of previous destinations
+Log-in page, 
+Registration page, 
+Trip agenda, 
+Packing List, 
+Map of previous destinations, 
 Financial Planner
 
 ### To Run Install depdencies
@@ -61,3 +61,11 @@ npm install react-scripts
 
 **run command:** 
 npm start
+
+**navigate to the folder titled 'backend' on your command line**
+**run command:**
+node index
+
+Create a free account with MongoDB Atlas. Create a cluster and a collection. Update the .env file accordingly with your username, password, cluster, and collection.
+
+Note: dependencies are the open-source software used in this project.
