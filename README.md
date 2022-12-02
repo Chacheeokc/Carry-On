@@ -5,7 +5,9 @@ Travelers
 
 ### TEAM MEMBERS:
 Lydia Bloomfield - Frontend 
+
 Gabe Chavez - Backend
+
 Luke Kirk - Project Manager, Full Stack
 
 ### OUR PROJECT NAME:
@@ -23,5 +25,39 @@ Packing List
 Map of previous destinations
 Financial Planner
 
-### Install
+### To Run Install depdencies
+install nodejs
+
+npm install react
+
 npm install axios
+
+npm install bcryptjs
+
+npm install bootstrap
+
+npm install date-fns
+
+npm install jsonwebtoken
+
+npm install mongoose
+
+npm install react-agenda
+
+npm install react-datepicker
+
+npm install react-router-dom@5
+
+npm install react-datetime-picker
+
+npm install react-google-charts
+
+npm install react-native-calandar-timetable
+
+npm install react-scripts
+
+
+**navigate to the folder titled 'fontend' on your command line**
+
+**run command:** 
+npm start
