@@ -5,23 +5,15 @@ import "./destinations.css"
 function Destinations() {
     const [newData, setNewData] = useState([
         ["Country", "Visited"],
-        // ["Germany", 0],
-        // ["United States", 300],
-        // // ["Brazil", 400],
-        // ["Canada", 500],
-        // ["France", 600],
-        // ["RU", 700]
     ])
  
     var item = "";
     var array = [];
 
     const options = {
-        colorAxis: { colors: ["white", "green"] },
+        colorAxis: { colors: ["white", "#198754"] },
         backgroundColor: "#81d4fa",
         legend: "none",
-        // datalessRegionColor: "#f8bbd0",
-        // defaultColor: "#f5f5f5",
       };
 
       useEffect(() => {
@@ -54,7 +46,6 @@ function Destinations() {
       }
 
      const handleGet = e => {
-        // e.preventDefault();
         const username = window.localStorage.getItem('username');
         fetch("http://localhost:5000/get-destinations", {
           method: "GET",
@@ -103,15 +94,12 @@ function Destinations() {
             data={newData} 
             options={options}
             />
-            {/* <button className="btn btn-success" onClick={(e) => { handleGet(e)}}> Get Destinations</button> */}
             <br></br>
-
             <input type="text" onChange={(e) => {item = e.target.value} } placeholder='Add an item...'/>
             <button className="destination-button" onClick={async (e) => {array = [item,400]; await handlePut(e) }}> Add </button>
             <input type="text" onChange={(e) => {item = e.target.value} } placeholder='Delete an item...'/>
             <button className="destination-button" onClick={async (e) => {array = [item,400]; await handleDelete(e) }}> Delete </button>
-        </div>
-        
+        </div>  
     );
 };
 

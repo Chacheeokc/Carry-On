@@ -1,8 +1,4 @@
-import React, { Component, useEffect } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle, faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
-// import "../index.css"
+import React, { Component } from "react";
 import "./packing-list.css";
 
 export default class PackingList extends Component {
@@ -21,10 +17,6 @@ export default class PackingList extends Component {
     this.handleGet();
   }
 
-  handleCheckboxClick(){
-
-  }
-  
   handlePut(e) {
     e.preventDefault();
     const { item } = this.state;
@@ -103,36 +95,30 @@ export default class PackingList extends Component {
             this.setState({ item: "" })
           }} >
             <label>
-            <input type="text" onChange={(e) => this.setState({ item: e.target.value })} className='add-item-input' placeholder='Add an item...'  />
-            <button className="add-button" > Add </button>
+              <input type="text" onChange={(e) => this.setState({ item: e.target.value })} className='add-item-input' placeholder='Add an item...' />
+              <button className="add-button" > Add </button>
             </label>
             <br></br>
 
           </form>
-       
-          {/* <button className="btn btn-success" onClick={this.handleGet}> Get packing list</button> */}
           {this.state.packingItems.map((packingItem, idx) => (
             <div key={idx}>
               <span className='d-flex align-items-center'>
 
-              <input type='checkbox' id="cbox2" value="second_checkbox"/> <label for="cbox2">
+                <input type='checkbox' id="cbox2" value="second_checkbox" /> <label for="cbox2">
 
-              <div className="list-item">{packingItem}</div>
-              <button className="remove-button" onClick={async (e) => {
-                await this.setState({ item: packingItem });
-                await this.handleDelete(e);
-              }}>
-                X
-              </button>
-              </label>
+                  <div className="list-item">{packingItem}</div>
+                  <button className="remove-button" onClick={async (e) => {
+                    await this.setState({ item: packingItem });
+                    await this.handleDelete(e);
+                  }}>
+                    X
+                  </button>
+                </label>
               </span>
               <br></br>
             </div>
-            
           ))}
-
-
-
         </div>
       </div>
     );

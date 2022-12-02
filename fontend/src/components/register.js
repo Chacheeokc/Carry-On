@@ -1,4 +1,4 @@
-import React, {Component } from "react";
+import React, { Component } from "react";
 
 export default class Register extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ export default class Register extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { username, password} = this.state;
+    const { username, password } = this.state;
     fetch("http://localhost:5000/register", {
       method: "POST",
       crossDomain: true,
@@ -31,7 +31,7 @@ export default class Register extends Component {
         console.log(data, "userRegister");
         window.location.href = "./login";
       });
-      console.log(username);
+    console.log(username);
   }
 
   render() {
@@ -43,6 +43,7 @@ export default class Register extends Component {
               <form className="submit-form" onSubmit={this.handleSubmit}>
                 <div>
                   <div className="form-group">
+                    <h4 style={{ color: "#198754" }}> <strong>Register your Account </strong></h4>
                     <label htmlFor="user">Username</label>
                     <input
                       type="text"

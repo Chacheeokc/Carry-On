@@ -39,53 +39,54 @@ export default class Login extends Component {
       });
   }
 
-    render() {
-      return (
-        <div className="row" class="col d-flex justify-content-center">
-          <div className="col-lg-6 pb-1">
-            <div class="card">
-              <div class="card-body">
-                <form className="submit-form" onSubmit={this.handleSubmit}>
-                  <div>
-                    <div className="form-group">
-                      <label htmlFor="user">Username</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        onChange={(e) => this.setState({ username: e.target.value })}
-                        id="name"
-                        required
-                        name="name"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor="id">Password</label>
-                      <input
-                        type="password"
-                        className="form-control"
-                        onChange={(e) => this.setState({ password: e.target.value })}
-                        id="id"
-                        required
-                        name="id"
-                      />
-                    </div>
-
-                    <br></br>
-                    <button className="btn btn-success">
-                      Login
-                    </button>
-                    <br></br>
-                    Don't have an account?
-                    <br></br>
-                    <a href="../register"> Register </a>
+  render() {
+    return (
+      <div className="row" class="col d-flex justify-content-center">
+        <div className="col-lg-6 pb-1">
+          <div class="card">
+            <div class="card-body">
+              <form className="submit-form" onSubmit={this.handleSubmit}>
+                <div>
+                  <div className="form-group">
+                    <h4 style={{ color: "#198754" }}> <strong> Login to your Account </strong></h4>
+                    <label htmlFor="user">Username</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      onChange={(e) => this.setState({ username: e.target.value })}
+                      id="name"
+                      required
+                      name="name"
+                    />
                   </div>
-                </form>
-              </div>
+
+                  <div className="form-group">
+                    <label htmlFor="id">Password</label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      onChange={(e) => this.setState({ password: e.target.value })}
+                      id="id"
+                      required
+                      name="id"
+                    />
+                  </div>
+
+                  <br></br>
+                  <button className="btn btn-success">
+                    Login
+                  </button>
+                  <br></br>
+                  Don't have an account?
+                  <br></br>
+                  <a href="../register"> Register </a>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      );
-    }
+      </div>
+    );
   }
+}
 

@@ -6,6 +6,7 @@ import Dashboard from "./components/dashboard";
 import Destinations from "./components/destinations";
 import Register from "./components/register";
 import Home from "./components/home";
+import "./App.css"
 
 // using bootstrap components
 // ex. navbar-dark is different bootstrap classes
@@ -32,6 +33,7 @@ function App() {
         if (data.status == "ok") {
           window.localStorage.removeItem("isLoggedIn");
           window.localStorage.removeItem("token");
+          window.localStorage.removeItem("username")
           window.location.href = "/login";
         }
       });
@@ -69,18 +71,18 @@ function App() {
       </nav>
 
       <div>
-          <Route exact path="/"> 
-              <Redirect to="/home" />
-          </Route>
-          <Route
-            path="/home"
-            render={(props) => (
-              <Home {...props} />
-            )}
-          />
-        </div>
-        <div className="container mt-3 px-1">
-          <Switch>
+        <Route exact path="/">
+          <Redirect to="/home" />
+        </Route>
+        <Route
+          path="/home"
+          render={(props) => (
+            <Home {...props} />
+          )}
+        />
+      </div>
+      <div className="container mt-3 px-1">
+        <Switch>
           <Route
             path="/login"
             render={(props) => (
