@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+// login page
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -10,6 +11,7 @@ export default class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // client-side for logging in a user
   handleSubmit(e) {
     e.preventDefault();
     const { username, password } = this.state;
@@ -39,6 +41,7 @@ export default class Login extends Component {
       });
   }
 
+  // HTML for login page
   render() {
     return (
       <div className="row" class="col d-flex justify-content-center">

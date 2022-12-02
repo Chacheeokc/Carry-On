@@ -8,14 +8,9 @@ import Register from "./components/register";
 import Home from "./components/home";
 import "./App.css"
 
-// using bootstrap components
-// ex. navbar-dark is different bootstrap classes
-//"navbar-brand" indicates that it's the brand part of the nav bar
-// similarly, navbar-nav indicates the navigation part of the nav bar
-// Clicking restaurants will take you to restaurants page
-
 function App() {
 
+  // client-side for logging out a user
   function handleSubmit(e) {
     e.preventDefault();
     fetch("http://localhost:5000/logout-user", {
@@ -39,6 +34,7 @@ function App() {
       });
   }
 
+  // HTML for navbar and routing
   return (
     <div>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
